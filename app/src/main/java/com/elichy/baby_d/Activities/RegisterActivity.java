@@ -12,6 +12,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.elichy.baby_d.BuildConfig;
 import com.elichy.baby_d.Globals;
 import com.elichy.baby_d.Models.ParentRegistration;
 import com.elichy.baby_d.Models.ResAPIHandler;
@@ -19,6 +20,8 @@ import com.elichy.baby_d.R;
 
 import java.util.regex.Pattern;
 
+import okhttp3.OkHttpClient;
+import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -134,10 +137,21 @@ public class RegisterActivity extends AppCompatActivity {
         email = (EditText) findViewById(R.id.email_text);
         password = (EditText) findViewById(R.id.password_text);
         submit = (Button) findViewById(R.id.submitBtn);
+
+        // create okhttp client
+        OkHttpClient.Builder okHttpClient = new OkHttpClient.Builder();
+        HttpLoggingInterceptor loggin = new HttpLoggingInterceptor();
+        if (BuildConfig.DEBUG) {
+            loggin.setLevel(HttpLoggingInterceptor.Level.BODY);
+        }
+        okHttpClient.addInterceptor(loggin);
+
         //todo set smaller timeout for it.
+        //Create retrofit instance
         retrofit = new Retrofit.Builder()
                 .baseUrl(String.format("%s/api/parent/", Globals.server_ip))
                 .addConverterFactory(GsonConverterFactory.create())
+                .client(okHttpClient.build())
                 .build();
         resAPIHandler = retrofit.create(ResAPIHandler.class);
     }

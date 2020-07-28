@@ -1,7 +1,11 @@
 package com.elichy.baby_d.Models;
 
+import java.util.List;
+
 import retrofit2.Call;
 import retrofit2.http.Body;
+import retrofit2.http.GET;
+import retrofit2.http.Header;
 import retrofit2.http.POST;
 
 public interface ResAPIHandler {
@@ -10,5 +14,8 @@ public interface ResAPIHandler {
     Call<String> registartParent(@Body ParentRegistration parentRegistration);
 
     @POST("login")
-    Call<String> loginParent(@Body ParentLogin parentLogin);
+    Call<Parent> loginParent(@Body ParentLogin parentLogin);
+
+    @GET("get_my_babies")
+    Call<List<Baby>> getMyBabies(@Header("Authoraization") String token);
 }

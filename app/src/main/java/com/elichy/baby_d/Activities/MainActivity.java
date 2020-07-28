@@ -3,6 +3,7 @@ package com.elichy.baby_d.Activities;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -11,6 +12,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.elichy.baby_d.Globals;
+import com.elichy.baby_d.Models.Parent;
 import com.elichy.baby_d.Models.ParentLogin;
 import com.elichy.baby_d.Models.ResAPIHandler;
 import com.elichy.baby_d.R;
@@ -33,6 +35,8 @@ public class MainActivity extends AppCompatActivity {
     private static final String TAG = "MainActivity";
     private ResAPIHandler resAPIHandler;
     private Retrofit retrofit;
+    public static final String SHARED_PREFS = "sharedPrefs";
+    public static final String TEXT = "token";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -81,10 +85,10 @@ public class MainActivity extends AppCompatActivity {
     private void loginValidate(String userEmail, String userPassword){
         Log.d(TAG, "loginValidate: Try to log in");
         ParentLogin parentInfo = new ParentLogin(userEmail, userPassword);
-        Call<String> call = resAPIHandler.loginParent(parentInfo);
-        call.enqueue(new Callback<String>() {
+        Call<Parent> call = resAPIHandler.loginParent(parentInfo);
+        call.enqueue(new Callback<Parent>() {
             @Override
-            public void onResponse(Call<String> call, Response<String> response) {
+            public void onResponse(Call<Parent> call, Response<Parent> response) {
                 if (!response.isSuccessful()){
                     Log.d(TAG, "loginValidate: Fail to login");
                     counter++;
@@ -95,14 +99,15 @@ public class MainActivity extends AppCompatActivity {
                     }
                     return;
                 }
-                String jwt = response.body();
+                Parent jwt = response.body();
+                saveToShardPref(jwt);
                 Log.d(TAG, String.format("onResponse: jwt: %s",jwt));
                 Intent intent = new Intent(MainActivity.this, ParentViewActivity.class);
                 startActivity(intent);
             }
 
             @Override
-            public void onFailure(Call<String> call, Throwable t) {
+            public void onFailure(Call<Parent> call, Throwable t) {
                 Log.d(TAG, "loginValidate: Fail to login");
                 counter++;
                 attempts.setText(String.format("Number of remaining attempts %s", (NUM_ATTEMPTS - counter)));
@@ -112,5 +117,12 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
+    }
+
+    private void saveToShardPref(Parent jwt) {
+        SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString(TEXT, jwt.getToken());
+        editor.apply();
     }
 }
