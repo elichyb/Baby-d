@@ -74,7 +74,7 @@ public class MainActivity extends AppCompatActivity {
         register = (Button) findViewById(R.id.registerBtn);
         attempts.setText("");
         retrofit = new Retrofit.Builder()
-                .baseUrl(String.format("%s/api/parent/", Globals.server_ip))
+                .baseUrl(String.format("%s/api/parent/", Globals.SERVER_IP))
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
         resAPIHandler = retrofit.create(ResAPIHandler.class);

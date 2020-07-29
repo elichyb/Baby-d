@@ -4,6 +4,96 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Activities.AddBabyViewActivity">
+    android:foregroundGravity="center_vertical|center|center_horizontal"
+    tools:context=".Activities.AddBabyViewActivity"
+    android:background="@color/colorAccent">
 
+    <EditText
+        android:id="@+id/BaybFirstNameText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="64dp"
+        android:ems="10"
+        android:foregroundGravity="center_vertical|center|center_horizontal"
+        android:hint="@string/BabyFirstName"
+        android:inputType="textPersonName"
+        app:layout_constraintBottom_toTopOf="@+id/BabyLastNameText"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.038" />
+
+    <EditText
+        android:id="@+id/BabyLastNameText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:foregroundGravity="center_vertical|center|center_horizontal"
+        android:hint="@string/BabyLastName"
+        android:inputType="textPersonName"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.214" />
+
+    <Spinner
+        android:id="@+id/BabyFoodTypeSpinner"
+        android:layout_width="206dp"
+        android:layout_height="49dp"
+        android:autofillHints="@string/FeedType"
+        android:foregroundGravity="center_vertical|center|center_horizontal"
+        android:spinnerMode="dropdown"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.482"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/BabyLastNameText"
+        app:layout_constraintVertical_bias="0.057"
+        android:entries="@array/Feed_Array"/>
+
+    <EditText
+        android:id="@+id/BabyWieghtText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="34dp"
+        android:ems="10"
+        android:foregroundGravity="center_vertical|center|center_horizontal"
+        android:hint="@string/BabyWeight"
+        android:inputType="textPersonName"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/BabyFoodTypeSpinner"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <EditText
+        android:id="@+id/BabyBirthDayText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:foregroundGravity="center_vertical|center|center_horizontal"
+        android:hint="@string/BabyBirthDay"
+        android:inputType="textPersonName"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.492"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/BabyWieghtText"
+        app:layout_constraintVertical_bias="0.11" />
+
+    <Button
+        android:id="@+id/SubmitBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/Submit"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/BabyBirthDayText"
+        app:layout_constraintVertical_bias="0.254" />
 </androidx.constraintlayout.widget.ConstraintLayout>

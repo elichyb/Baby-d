@@ -7,4 +7,14 @@
     <string name="First_name">First name</string>
     <string name="Submit">Submit</string>
     <string name="AddBabyBtn">Add Baby</string>
+    <string name="BabyLastName">Baby Last Name</string>
+    <string name="BabyFirstName">Baby First Name</string>
+    <string name="FeedType">Feed Type</string>
+    <string name="BabyWeight">Baby Weight </string>
+    <string name="BabyBirthDay">Baby Birth Day</string>
+    <string-array name="Feed_Array">
+        <item>Breast Feeding</item>
+        <item>Formula</item>
+        <item>Combined</item>
+    </string-array>
 </resources>

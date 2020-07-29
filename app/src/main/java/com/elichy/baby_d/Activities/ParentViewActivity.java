@@ -1,7 +1,6 @@
 package com.elichy.baby_d.Activities;
 
 import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -9,13 +8,11 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.GridLayout;
 import android.widget.Toast;
-
 import com.elichy.baby_d.Globals;
 import com.elichy.baby_d.Models.Baby;
 import com.elichy.baby_d.Models.ResAPIHandler;
 import com.elichy.baby_d.R;
 import java.util.List;
-
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -28,7 +25,6 @@ public class ParentViewActivity extends AppCompatActivity {
     private Button addBabyBtn;
     private Retrofit retrofit;
     private String token;
-    private String TEXT = "token";
     public static final String SHARED_PREFS = "sharedPrefs";
     private ResAPIHandler resAPIHandler;
 
@@ -56,7 +52,7 @@ public class ParentViewActivity extends AppCompatActivity {
         babyListView = (GridLayout) findViewById(R.id.babyListView);
         addBabyBtn = (Button) findViewById(R.id.addBabybtn);
         Retrofit.Builder builder = new Retrofit.Builder()
-                .baseUrl(String.format("%s/api/baby", Globals.server_ip))
+                .baseUrl(String.format("%s/api/baby", Globals.SERVER_IP))
                 .addConverterFactory(GsonConverterFactory.create());
 
         retrofit = builder.build();
@@ -85,6 +81,6 @@ public class ParentViewActivity extends AppCompatActivity {
 
     public void loadData() {
         SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
-        this.token = sharedPreferences.getString(TEXT,"");
+        this.token = sharedPreferences.getString(Globals.TOKEN,"");
     }
 }

@@ -1,7 +1,6 @@
 package com.elichy.baby_d.Activities;
 
 import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Context;
 import android.os.Bundle;
 import android.text.Editable;
@@ -11,15 +10,12 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
-
 import com.elichy.baby_d.BuildConfig;
 import com.elichy.baby_d.Globals;
 import com.elichy.baby_d.Models.ParentRegistration;
 import com.elichy.baby_d.Models.ResAPIHandler;
 import com.elichy.baby_d.R;
-
 import java.util.regex.Pattern;
-
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Call;
@@ -149,7 +145,7 @@ public class RegisterActivity extends AppCompatActivity {
         //todo set smaller timeout for it.
         //Create retrofit instance
         retrofit = new Retrofit.Builder()
-                .baseUrl(String.format("%s/api/parent/", Globals.server_ip))
+                .baseUrl(String.format("%s/api/parent/", Globals.SERVER_IP))
                 .addConverterFactory(GsonConverterFactory.create())
                 .client(okHttpClient.build())
                 .build();
