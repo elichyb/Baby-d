@@ -6,4 +6,5 @@
     <string name="Last_name">Last name</string>
     <string name="First_name">First name</string>
     <string name="Submit">Submit</string>
+    <string name="AddBabyBtn">Add Baby</string>
 </resources>
