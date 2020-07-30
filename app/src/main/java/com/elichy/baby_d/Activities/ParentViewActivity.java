@@ -8,11 +8,16 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.GridLayout;
 import android.widget.Toast;
+
+import com.elichy.baby_d.BuildConfig;
 import com.elichy.baby_d.Globals;
 import com.elichy.baby_d.Models.Baby;
 import com.elichy.baby_d.Models.ResAPIHandler;
 import com.elichy.baby_d.R;
 import java.util.List;
+
+import okhttp3.OkHttpClient;
+import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -49,13 +54,23 @@ public class ParentViewActivity extends AppCompatActivity {
 
     private void setInit() {
         loadData();
-        babyListView = (GridLayout) findViewById(R.id.babyListView);
+//        babyListView = (GridLayout) findViewById(R.id.babyListView);
         addBabyBtn = (Button) findViewById(R.id.addBabybtn);
+
+        // create okhttp client
+        OkHttpClient.Builder okHttpClient = new OkHttpClient.Builder();
+        HttpLoggingInterceptor loggin = new HttpLoggingInterceptor();
+        if (BuildConfig.DEBUG) {
+            loggin.setLevel(HttpLoggingInterceptor.Level.BODY);
+        }
+        okHttpClient.addInterceptor(loggin);
         Retrofit.Builder builder = new Retrofit.Builder()
-                .baseUrl(String.format("%s/api/baby", Globals.SERVER_IP))
+                .baseUrl(String.format("%s/api/baby/", Globals.SERVER_IP))
+                .client(okHttpClient.build())
                 .addConverterFactory(GsonConverterFactory.create());
 
         retrofit = builder.build();
+        resAPIHandler = retrofit.create(ResAPIHandler.class);
 
         Call<List<Baby>> call = resAPIHandler.getMyBabies(this.token);
         call.enqueue(new Callback<List<Baby>>() {
@@ -66,7 +81,7 @@ public class ParentViewActivity extends AppCompatActivity {
                     Toast.makeText(ParentViewActivity.this, "failed to login", Toast.LENGTH_SHORT).show();
                     return;
                 }
-
+                List<Baby> babies = response.body();
             }
 
             @Override

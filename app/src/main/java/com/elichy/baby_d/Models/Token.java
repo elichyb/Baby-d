@@ -1,9 +1,9 @@
 package com.elichy.baby_d.Models;
 
-public class Parent {
+public class Token {
     private String token;
 
-    public Parent(String token) {
+    public Token(String token) {
         this.token = token;
     }
 
@@ -13,12 +13,5 @@ public class Parent {
 
     public void setToken(String token) {
         this.token = token;
-    }
-
-    @Override
-    public String toString() {
-        return "Parent{" +
-                "token='" + token + '\'' +
-                '}';
     }
 }

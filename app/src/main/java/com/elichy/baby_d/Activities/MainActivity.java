@@ -11,12 +11,15 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.elichy.baby_d.BuildConfig;
 import com.elichy.baby_d.Globals;
-import com.elichy.baby_d.Models.Parent;
 import com.elichy.baby_d.Models.ParentLogin;
 import com.elichy.baby_d.Models.ResAPIHandler;
+import com.elichy.baby_d.Models.Token;
 import com.elichy.baby_d.R;
 
+import okhttp3.OkHttpClient;
+import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -73,9 +76,18 @@ public class MainActivity extends AppCompatActivity {
         login = (Button) findViewById(R.id.login);
         register = (Button) findViewById(R.id.registerBtn);
         attempts.setText("");
+
+        // create okhttp client
+        OkHttpClient.Builder okHttpClient = new OkHttpClient.Builder();
+        HttpLoggingInterceptor loggin = new HttpLoggingInterceptor();
+        if (BuildConfig.DEBUG) {
+            loggin.setLevel(HttpLoggingInterceptor.Level.BODY);
+        }
+        okHttpClient.addInterceptor(loggin);
         retrofit = new Retrofit.Builder()
                 .baseUrl(String.format("%s/api/parent/", Globals.SERVER_IP))
                 .addConverterFactory(GsonConverterFactory.create())
+                .client(okHttpClient.build())
                 .build();
         resAPIHandler = retrofit.create(ResAPIHandler.class);
 
@@ -85,11 +97,11 @@ public class MainActivity extends AppCompatActivity {
     private void loginValidate(String userEmail, String userPassword){
         Log.d(TAG, "loginValidate: Try to log in");
         ParentLogin parentInfo = new ParentLogin(userEmail, userPassword);
-        Call<Parent> call = resAPIHandler.loginParent(parentInfo);
-        call.enqueue(new Callback<Parent>() {
+        Call<Token> call = resAPIHandler.loginParent(parentInfo);
+        call.enqueue(new Callback<Token>() {
             @Override
-            public void onResponse(Call<Parent> call, Response<Parent> response) {
-                if (!response.isSuccessful()){
+            public void onResponse(Call<Token> call, Response<Token> response) {
+                if (! response.isSuccessful()){
                     Log.d(TAG, "loginValidate: Fail to login");
                     counter++;
                     attempts.setText(String.format("Number of remaining attempts %s", (NUM_ATTEMPTS - counter)));
@@ -99,7 +111,7 @@ public class MainActivity extends AppCompatActivity {
                     }
                     return;
                 }
-                Parent jwt = response.body();
+                Token jwt = response.body();
                 saveToShardPref(jwt);
                 Log.d(TAG, String.format("onResponse: jwt: %s",jwt));
                 Intent intent = new Intent(MainActivity.this, ParentViewActivity.class);
@@ -107,7 +119,7 @@ public class MainActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onFailure(Call<Parent> call, Throwable t) {
+            public void onFailure(Call<Token> call, Throwable t) {
                 Log.d(TAG, "loginValidate: Fail to login");
                 counter++;
                 attempts.setText(String.format("Number of remaining attempts %s", (NUM_ATTEMPTS - counter)));
@@ -119,10 +131,10 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    private void saveToShardPref(Parent jwt) {
+    private void saveToShardPref(Token jwt) {
         SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putString(TEXT, jwt.getToken());
+        editor.putString(TEXT, Globals.TOKEN_PREFIX + " " + jwt.getToken());
         editor.apply();
     }
 }

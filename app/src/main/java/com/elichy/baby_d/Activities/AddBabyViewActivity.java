@@ -125,7 +125,7 @@ public class AddBabyViewActivity extends AppCompatActivity {
         weight = (TextView) findViewById(R.id.BabyWieghtText);
         birthDay = (TextView) findViewById(R.id.BabyBirthDayText);
         Retrofit.Builder builder = new Retrofit.Builder()
-                .baseUrl(String.format("%s/api/baby", Globals.SERVER_IP))
+                .baseUrl(String.format("%s/api/baby/", Globals.SERVER_IP))
                 .addConverterFactory(GsonConverterFactory.create());
         // load data from SHARED_PREFS
         SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);

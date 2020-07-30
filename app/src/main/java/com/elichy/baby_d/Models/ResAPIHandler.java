@@ -14,11 +14,11 @@ public interface ResAPIHandler {
     Call<String> registartParent(@Body ParentRegistration parentRegistration);
 
     @POST("login")
-    Call<Parent> loginParent(@Body ParentLogin parentLogin);
+    Call<Token> loginParent(@Body ParentLogin parentLogin);
 
     @GET("get_my_babies")
-    Call<List<Baby>> getMyBabies(@Header("Authoraization") String token);
+    Call<List<Baby>> getMyBabies(@Header("Authorization") String token);
 
     @POST("add_baby")
-    Call<String> addNewBaby(@Header("Authoraization") String token);
+    Call<String> addNewBaby(@Header("Authorization") String token);
 }
