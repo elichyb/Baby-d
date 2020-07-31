@@ -20,5 +20,5 @@ public interface ResAPIHandler {
     Call<List<Baby>> getMyBabies(@Header("Authorization") String token);
 
     @POST("add_baby")
-    Call<String> addNewBaby(@Header("Authorization") String token);
+    Call<String> addNewBaby(@Header("Authorization") String token, @Body Baby baby);
 }

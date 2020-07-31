@@ -1,14 +1,16 @@
 package com.elichy.baby_d.Models;
 
+import java.util.SimpleTimeZone;
+
 public class Baby {
 
     private String first_name;
     private String last_name;
     private int food_type; // (1- will represent breastfeeding; 2- formula; 3- combined)
     private String baby_birth_day;
-    private float weight;
+    private String weight;
 
-    public Baby(String first_name, String last_name, int food_type, String baby_birth_day, float weight) {
+    public Baby(String first_name, String last_name, int food_type, String baby_birth_day, String weight) {
         this.first_name = first_name;
         this.last_name = last_name;
         this.food_type = food_type;
@@ -16,15 +18,16 @@ public class Baby {
         this.weight = weight;
     }
 
+
     public String getFirst_name() {
         return first_name;
     }
 
-    public float getWeight() {
+    public String getWeight() {
         return weight;
     }
 
-    public void setWeight(float weight) {
+    public void setWeight(String weight) {
         this.weight = weight;
     }
 

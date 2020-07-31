@@ -2,11 +2,10 @@ package com.elichy.baby_d.Activities;
 
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
+import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.Editable;
@@ -19,9 +18,12 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 import com.elichy.baby_d.Globals;
+import com.elichy.baby_d.Models.Baby;
 import com.elichy.baby_d.Models.ResAPIHandler;
 import com.elichy.baby_d.R;
 import java.util.Calendar;
+import java.util.concurrent.BlockingDeque;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -70,10 +72,9 @@ public class AddBabyViewActivity extends AppCompatActivity {
                 int month = cal.get(Calendar.MONTH);
                 int day = cal.get(Calendar.DAY_OF_MONTH);
                 DatePickerDialog dialog = new DatePickerDialog(AddBabyViewActivity.this,
-                        android.R.style.Theme_DeviceDefault_DayNight,
+                        AlertDialog.THEME_HOLO_LIGHT,
                         dateSetListner,
                         year, month, day);
-                dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
                 dialog.show();
             }
         });
@@ -82,10 +83,10 @@ public class AddBabyViewActivity extends AppCompatActivity {
             @Override
             public void onDateSet(DatePicker datePicker, int year, int month, int day) {
                 month += 1;
-                String sday = day <= 9 ? String.valueOf(day) : "0" + day;
-                String smonth = day <= 9 ? String.valueOf(month) : "0" + month;
+                String sday = day >= 9 ? String.valueOf(day) : "0" + day;
+                String smonth = month >= 9 ? String.valueOf(month) : "0" + month;
 
-                String date = sday + "-" + smonth + "-" + year;
+                String date = year + "-" + smonth + "-" + sday;
                 birthDay.setText(date);
             }
         };
@@ -96,8 +97,15 @@ public class AddBabyViewActivity extends AppCompatActivity {
                 Context context = getApplicationContext();
                 CharSequence toastText = "Failed to add baby";
                 Toast addBabyFailed = Toast.makeText(context, toastText, Toast.LENGTH_SHORT);
-
-                Call<String> call = resAPIHandler.addNewBaby(token);
+                int food = getFoodType();
+                Baby baby = new Baby(firstName.getText().toString().trim(),
+                        lastName.getText().toString().trim(),
+                        food,
+                        birthDay.getText().toString().trim(),
+                        String.valueOf(weight.getText()));
+                Log.d(TAG, "onClick: Baby to send is:" + baby.toString());
+                resAPIHandler = retrofit.create(ResAPIHandler.class);
+                Call<String> call = resAPIHandler.addNewBaby(token, baby);
                 call.enqueue(new Callback<String>() {
                     @Override
                     public void onResponse(Call<String> call, Response<String> response) {
@@ -118,6 +126,17 @@ public class AddBabyViewActivity extends AppCompatActivity {
         });
     }
 
+    private int getFoodType() {
+        String tmp = (String) foodType.getSelectedItem();
+        if (tmp.equals("Breast Feeding"))
+            return 1;
+        else if (tmp.equals("Formula"))
+            return 2;
+        else
+            return 3;
+
+    }
+
     private void setInit() {
         firstName = (TextView) findViewById(R.id.BaybFirstNameText);
         lastName = (TextView) findViewById(R.id.BabyLastNameText);
@@ -132,7 +151,7 @@ public class AddBabyViewActivity extends AppCompatActivity {
         this.token = sharedPreferences.getString(Globals.TOKEN,"");
 
         retrofit = builder.build();
-        submitBtn = (Button) findViewById(R.id.submitBtn);
+        submitBtn = (Button) findViewById(R.id.SubmitBtn);
     }
 
     private TextWatcher submiteTextWatcher = new TextWatcher() {
