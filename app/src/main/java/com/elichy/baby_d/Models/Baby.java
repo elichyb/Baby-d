@@ -62,11 +62,15 @@ public class Baby {
 
     @Override
     public String toString() {
-        return "Baby{" +
-                ", first_name='" + first_name + '\'' +
-                ", last_name='" + last_name + '\'' +
-                ", food_type=" + food_type +
-                ", baby_birth_day='" + baby_birth_day + '\'' +
-                '}';
+        String sfood;
+        if (food_type == 1)
+            sfood = "breastfeeding";
+        else if(food_type == 2)
+            sfood = "formula";
+        else
+            sfood = "combined";
+
+        return  "First_name: " + first_name + ", Last_name:" + last_name + ", Food Type: " + sfood +
+                ", birthday: " + baby_birth_day ;
     }
 }

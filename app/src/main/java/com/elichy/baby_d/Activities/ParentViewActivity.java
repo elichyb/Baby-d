@@ -5,8 +5,10 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.GridLayout;
+import android.widget.ListView;
 import android.widget.Toast;
 
 import com.elichy.baby_d.BuildConfig;
@@ -25,7 +27,7 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class ParentViewActivity extends AppCompatActivity {
-    private GridLayout babyListView;
+    private ListView babyListView;
     private List<Baby> babyList;
     private Button addBabyBtn;
     private Retrofit retrofit;
@@ -54,7 +56,7 @@ public class ParentViewActivity extends AppCompatActivity {
 
     private void setInit() {
         loadData();
-//        babyListView = (GridLayout) findViewById(R.id.babyListView);
+        babyListView = (ListView) findViewById(R.id.babyListView);
         addBabyBtn = (Button) findViewById(R.id.addBabybtn);
 
         // create okhttp client
@@ -82,6 +84,10 @@ public class ParentViewActivity extends AppCompatActivity {
                     return;
                 }
                 List<Baby> babies = response.body();
+                if (babies != null) {
+                    ArrayAdapter<Baby> babiesAdapter = new ArrayAdapter(ParentViewActivity.this, android.R.layout.simple_list_item_1, babies);
+                    babyListView.setAdapter(babiesAdapter);
+                }
             }
 
             @Override

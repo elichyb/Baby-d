@@ -20,18 +20,15 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.981" />
 
-    <androidx.gridlayout.widget.GridLayout
+    <ListView
         android:id="@+id/babyListView"
-        android:layout_width="378dp"
-        android:layout_height="546dp"
+        android:layout_width="368dp"
+        android:layout_height="550dp"
         app:layout_constraintBottom_toTopOf="@+id/addBabybtn"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.493"
+        app:layout_constraintHorizontal_bias="0.488"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.434"
-        app:columnCount="2">
-
-    </androidx.gridlayout.widget.GridLayout>
+        app:layout_constraintVertical_bias="0.504" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

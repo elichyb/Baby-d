@@ -134,7 +134,7 @@ public class MainActivity extends AppCompatActivity {
     private void saveToShardPref(Token jwt) {
         SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putString(TEXT, Globals.TOKEN_PREFIX + " " + jwt.getToken());
+        editor.putString(Globals.TOKEN, Globals.TOKEN_PREFIX + " " + jwt.getToken());
         editor.apply();
     }
 }
