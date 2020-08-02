@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.GridLayout;
@@ -87,6 +88,15 @@ public class ParentViewActivity extends AppCompatActivity {
                 if (babies != null) {
                     ArrayAdapter<Baby> babiesAdapter = new ArrayAdapter(ParentViewActivity.this, android.R.layout.simple_list_item_1, babies);
                     babyListView.setAdapter(babiesAdapter);
+                    babyListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                        @Override
+                        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                            Intent intent = new Intent(ParentViewActivity.this, BabyViewActivity.class);
+                            Baby b = (Baby) parent.getAdapter().getItem(position);
+                            intent.putExtra("Baby_id", b.getBaby_id());
+                            startActivity(intent);
+                        }
+                    });
                 }
             }
 

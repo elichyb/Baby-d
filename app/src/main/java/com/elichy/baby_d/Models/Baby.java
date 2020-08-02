@@ -1,9 +1,10 @@
 package com.elichy.baby_d.Models;
 
 import java.util.SimpleTimeZone;
+import java.util.UUID;
 
 public class Baby {
-
+    private UUID id;
     private String first_name;
     private String last_name;
     private int food_type; // (1- will represent breastfeeding; 2- formula; 3- combined)
@@ -18,6 +19,22 @@ public class Baby {
         this.weight = weight;
     }
 
+    public Baby(UUID id, String first_name, String last_name, int food_type, String baby_birth_day, String weight) {
+        this.id = id;
+        this.first_name = first_name;
+        this.last_name = last_name;
+        this.food_type = food_type;
+        this.baby_birth_day = baby_birth_day;
+        this.weight = weight;
+    }
+
+    public UUID getBaby_id() {
+        return id;
+    }
+
+    public void setBaby_id(UUID baby_id) {
+        this.id = baby_id;
+    }
 
     public String getFirst_name() {
         return first_name;
