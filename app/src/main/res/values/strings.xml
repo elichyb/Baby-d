@@ -12,6 +12,16 @@
     <string name="FeedType">Feed Type</string>
     <string name="BabyWeight">Baby Weight </string>
     <string name="BabyBirthDay">Baby Birth Day</string>
+    <string name="currentWeight">Current baby weight:</string>
+    <string name="babyInfo">Baby Info</string>
+    <string name="LoginTitle">Baby-D Login</string>
+    <string name="WelcomeTitle">Baby-D Welcome</string>
+    <string name="RegisterTitle">Baby-D Register</string>
+    <string name="AddBabyTitle">Baby-D Add Baby</string>
+    <string name="BabyInfoTitle">Baby-D Baby Info</string>
+    <string name="setBabyWeight">Change weight</string>
+    <string name="Set_new_baby_weight">Set new baby weight?</string>
+    <string name="weight">Weight</string>
     <string-array name="Feed_Array">
         <item>Breast Feeding</item>
         <item>Formula</item>

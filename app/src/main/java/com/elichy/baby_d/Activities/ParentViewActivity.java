@@ -93,7 +93,8 @@ public class ParentViewActivity extends AppCompatActivity {
                         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                             Intent intent = new Intent(ParentViewActivity.this, BabyViewActivity.class);
                             Baby b = (Baby) parent.getAdapter().getItem(position);
-                            intent.putExtra("Baby_id", b.getBaby_id());
+                            String tmp = b.getBaby_id().toString();
+                            intent.putExtra(Globals.BABY_ID, tmp);
                             startActivity(intent);
                         }
                     });

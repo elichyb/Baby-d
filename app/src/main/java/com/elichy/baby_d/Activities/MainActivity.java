@@ -39,13 +39,19 @@ public class MainActivity extends AppCompatActivity {
     private ResAPIHandler resAPIHandler;
     private Retrofit retrofit;
     public static final String SHARED_PREFS = "sharedPrefs";
-    public static final String TEXT = "token";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Log.d(TAG, "onCreate: Load main application");
+
+        if (! loadData().isEmpty()){
+            Log.d(TAG, "onCreate: Moving forward to parent view");
+            Intent intent = new Intent(MainActivity.this, ParentViewActivity.class);
+            startActivity(intent);
+        }
+
         loginInit();
         setListenrs();
     }
@@ -129,6 +135,11 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
+    }
+
+    public String loadData() {
+        SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
+        return sharedPreferences.getString(Globals.TOKEN,"");
     }
 
     private void saveToShardPref(Token jwt) {
