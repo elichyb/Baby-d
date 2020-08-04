@@ -1,12 +1,13 @@
 package com.elichy.baby_d.Models;
 
 import java.util.List;
-
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
 import retrofit2.http.POST;
+import retrofit2.http.PUT;
+
 
 public interface ResAPIHandler {
 
@@ -21,4 +22,7 @@ public interface ResAPIHandler {
 
     @POST("add_baby")
     Call<String> addNewBaby(@Header("Authorization") String token, @Body Baby baby);
+
+    @PUT("set_weight")
+    Call<String> setBabyWeight(@Header("Authorization") String token, @Body Weight weight);
 }
