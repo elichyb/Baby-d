@@ -1,4 +1,4 @@
-package com.elichy.baby_d.Dialogs;
+package com.elichy.baby_d.ViewAdds;
 
 import android.os.Bundle;
 import android.text.Editable;
@@ -78,7 +78,8 @@ public class SetWeightDialog  extends DialogFragment {
                         if (! response.isSuccessful()){
                             Toast.makeText(getContext(), "Failed to set baby    weight", Toast.LENGTH_SHORT).show();
                         }
-                        else{
+                        else
+                            {
                             Toast.makeText(getContext(), "Baby weight set successfully", Toast.LENGTH_SHORT).show();
                         }
                     }

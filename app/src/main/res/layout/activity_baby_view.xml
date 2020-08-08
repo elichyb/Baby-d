@@ -1,45 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".Activities.BabyViewActivity">
 
-    <RelativeLayout
-        android:id="@+id/weightContainer"
+    <TextView
+        android:id="@+id/helloBaby"
+        android:background="#A889D5"
+        android:layout_alignParentTop="true"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#B6768C">
+        android:layout_margin="5dp"
+        android:layout_marginStart="8dp"
+        android:padding="10dp"
+        android:text="@string/helloBaby"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.047" />
 
-        <TextView
-            android:id="@+id/weightText"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/currentWeight"
-            android:textSize="21sp"
-            android:textStyle="bold"
-            android:padding="10dp"/>
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:layout_below="@id/helloBaby"
+        android:layout_height="match_parent"
+        android:id="@+id/babySectionList"
+        android:padding="4dp"
+        android:background="#86CDC6"
+        android:scrollbars="vertical"/>
 
-        <TextView
-            android:id="@+id/weight"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_toEndOf="@id/weightText"
-            />
-
-        <Button
-            android:id="@+id/SetWeightBtn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:layout_marginStart="2dp"
-            android:layout_marginTop="2dp"
-            android:layout_marginEnd="2dp"
-            android:layout_marginBottom="2dp"
-            android:layout_toEndOf="@+id/weight"
-            android:onClick="showDialog"
-            android:padding="10dp"
-            android:text="@string/setBabyWeight" />
-    </RelativeLayout>
 
 </RelativeLayout>

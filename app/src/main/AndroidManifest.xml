@@ -12,15 +12,20 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Activities.BabyViewActivity"
-             android:label="@string/BabyInfoTitle"/>
-        <activity android:name=".Activities.AddBabyViewActivity"
-            android:label="@string/AddBabyTitle"/>
-        <activity android:name=".Activities.RegisterActivity"
-            android:label="@string/RegisterTitle"/>
-        <activity android:name=".Activities.ParentViewActivity"
-            android:label="@string/WelcomeTitle"/>
-        <activity android:name=".Activities.MainActivity"
+        <activity android:name=".Activities.BabyDiaper"></activity>
+        <activity android:name=".Activities.BabyWeight" />
+        <activity android:name=".Activities.BabyViewActivity" />
+        <activity
+            android:name=".Activities.AddBabyViewActivity"
+            android:label="@string/AddBabyTitle" />
+        <activity
+            android:name=".Activities.RegisterActivity"
+            android:label="@string/RegisterTitle" />
+        <activity
+            android:name=".Activities.ParentViewActivity"
+            android:label="@string/WelcomeTitle" />
+        <activity
+            android:name=".Activities.MainActivity"
             android:label="@string/LoginTitle">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

@@ -12,7 +12,7 @@
     <string name="FeedType">Feed Type</string>
     <string name="BabyWeight">Baby Weight </string>
     <string name="BabyBirthDay">Baby Birth Day</string>
-    <string name="currentWeight">Current baby weight:</string>
+    <string name="currentWeight">Current weight:</string>
     <string name="babyInfo">Baby Info</string>
     <string name="LoginTitle">Baby-D Login</string>
     <string name="WelcomeTitle">Baby-D Welcome</string>
@@ -22,9 +22,26 @@
     <string name="setBabyWeight">Change weight</string>
     <string name="Set_new_baby_weight">Set new baby weight?</string>
     <string name="weight">Weight</string>
+    <string name="setDiaper">Set Diaper</string>
+    <string name="helloBaby">Hello</string>
+    <string name="Diaper">Diaper</string>
+    <string name="fake">fake</string>
+    <string name="wetDiaper">Wet diapers:</string>
+    <string name="dirtyDiaper">Dirty diapers:</string>
+    <string name="AddDiaperRecord">Add Diaper Record</string>
+    <string name="wet">Wet</string>
+    <string name="dirty">Dirty</string>
+
     <string-array name="Feed_Array">
         <item>Breast Feeding</item>
         <item>Formula</item>
         <item>Combined</item>
+    </string-array>
+
+    <string-array name="babySections">
+        <item>Current Weight</item>
+        <item>Diaper</item>
+        <item>Eating</item>
+        <item>Sleeping</item>
     </string-array>
 </resources>

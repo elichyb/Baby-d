@@ -1,42 +1,50 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    tools:context=".Activities.BabyWeight"
+    tools:layout_editor_absoluteY="81dp"
     android:background="@color/colorAccent">
+
     <RelativeLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true">
-        <TextView
-            android:id="@+id/textView2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/Set_new_baby_weight"
-            android:layout_centerHorizontal="true"
-            android:padding="20dp"
-            android:textSize="24dp"
-            />
 
-        <EditText
+        <TextView
             android:id="@+id/babyWeightText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/textView2"
+            android:layout_alignParentTop="true"
             android:layout_centerHorizontal="true"
-            android:padding="20dp"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            android:padding="10dp"
+            android:layout_margin="10dp"
+            android:text="@string/currentWeight" />
+
+        <TextView
+            android:id="@+id/weight"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/fake"
+            android:layout_centerHorizontal="true"
+            android:layout_below="@id/babyWeightText"
+            android:padding="10dp"
+            android:layout_margin="10dp"
+            android:textSize="24sp"
+            android:textStyle="bold"
             />
 
         <Button
-            android:id="@+id/submitBtn"
+            android:id="@+id/changeWeightDialog"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/babyWeightText"
+            android:text="@string/setBabyWeight"
+            android:layout_below="@id/weight"
             android:layout_centerHorizontal="true"
-            android:enabled="false"
-            android:padding="20dp"
-            android:text="@string/Submit" />
+            android:layout_margin="10dp"/>
     </RelativeLayout>
 </RelativeLayout>
