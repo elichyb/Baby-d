@@ -18,6 +18,9 @@ import com.elichy.baby_d.Globals;
 import com.elichy.baby_d.Models.ResAPIHandler;
 import com.elichy.baby_d.Models.Weight;
 import com.elichy.baby_d.R;
+
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.UUID;
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
@@ -43,17 +46,18 @@ public class SetWeightDialog  extends DialogFragment {
         super.onCreateView(inflater, container, savedInstanceState);
         View view = inflater.inflate(R.layout.set_weight_dialog, container, false);
         setInit(view);
-        setListner();
+        setListener();
         // Setting text watcher for this
         babyWeightText.addTextChangedListener(submiteTextWatcher);
         Log.d(TAG, "onCreateView: Load the dialog fragment");
         return view;
     }
 
-    private void setListner() {
+    private void setListener() {
         submitBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                String today = get_date();
                 // create okhttp client
                 OkHttpClient.Builder okHttpClient = new OkHttpClient.Builder();
                 HttpLoggingInterceptor loggin = new HttpLoggingInterceptor();
@@ -69,7 +73,7 @@ public class SetWeightDialog  extends DialogFragment {
                 retrofit = builder.build();
                 resAPIHandler = retrofit.create(ResAPIHandler.class);
                 double w = Double.parseDouble(babyWeightText.getText().toString().trim());
-                Weight weight = new Weight(baby_id, w);
+                Weight weight = new Weight(baby_id, w, today);
 
                 Call<String> call = resAPIHandler.setBabyWeight(token, weight);
                 call.enqueue(new Callback<String>() {
@@ -90,6 +94,11 @@ public class SetWeightDialog  extends DialogFragment {
                         Toast.makeText(getContext(), "Failed to set baby weight", Toast.LENGTH_SHORT).show();
                     }
                 });
+            }
+
+            private String get_date() {
+                DateTimeFormatter dtf = DateTimeFormatter.ofPattern(Globals.DATE_FORMAT);
+                return LocalDateTime.now().toString();
             }
         });
     }

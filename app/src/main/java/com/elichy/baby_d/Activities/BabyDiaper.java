@@ -3,12 +3,16 @@ package com.elichy.baby_d.Activities;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.elichy.baby_d.Globals;
 import com.elichy.baby_d.R;
+import com.elichy.baby_d.ViewAdds.SetDiaperDialog;
 
 import java.util.UUID;
 
@@ -39,11 +43,31 @@ public class BabyDiaper extends AppCompatActivity {
     }
 
     private void setOnClickListeners() {
+        openDialogBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                SetDiaperDialog setDiaperDialog = new SetDiaperDialog();
+                setDiaperDialog.setBaby_id(baby_id);
+                setDiaperDialog.setToken(token);
+                setDiaperDialog.show(getSupportFragmentManager(),"setDiaperDialog");
+            }
+        });
     }
 
     private void setInit() {
         openDialogBtn = (Button) findViewById(R.id.AddDiaperRecordBtn);
         dirtyDiaperTextValue = (TextView) findViewById(R.id.dirtyDiaperTextValue);
         wetDiaperTextValue = (TextView) findViewById(R.id.wetDiaperTextValue);
+        loadData();
+        setBaby_id();
+    }
+
+    public void loadData() {
+        SharedPreferences sharedPreferences = getSharedPreferences(Globals.SHARED_PREFS, MODE_PRIVATE);
+        this.token = sharedPreferences.getString(Globals.TOKEN,"");
+    }
+
+    public void setBaby_id(){
+        baby_id =  UUID.fromString(getIntent().getStringExtra("baby_id"));
     }
 }

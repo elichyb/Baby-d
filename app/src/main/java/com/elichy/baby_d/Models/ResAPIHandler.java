@@ -23,6 +23,9 @@ public interface ResAPIHandler {
     @POST("add_baby")
     Call<String> addNewBaby(@Header("Authorization") String token, @Body Baby baby);
 
-    @PUT("set_weight")
+    @POST("set_weight")
     Call<String> setBabyWeight(@Header("Authorization") String token, @Body Weight weight);
+
+    @POST("set_diaper")
+    Call<String> setBabyDiaper(@Header("Authorization") String token, @Body Diaper diaper);
 }

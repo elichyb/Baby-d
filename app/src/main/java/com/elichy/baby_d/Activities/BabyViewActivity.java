@@ -28,7 +28,7 @@ public class BabyViewActivity extends AppCompatActivity implements BabySectionRe
     private RecyclerView.LayoutManager mLayoutManager;
     private Retrofit retrofit;
     private String token;
-    public static final String SHARED_PREFS = "sharedPrefs";
+
     private ResAPIHandler resAPIHandler;
     private UUID baby_id;
 
@@ -62,22 +62,31 @@ public class BabyViewActivity extends AppCompatActivity implements BabySectionRe
             case "Current Weight":
                 Log.d(TAG, "onSectionClicked: Goes into current weight");
                 intent = new Intent(this, BabyWeight.class);
-                intent.putExtra("weight", Double.toString(0.0)); //todo get baby current weight for this.
+                intent.putExtra("weight", Double.toString(0.0));
+                intent.putExtra("baby_id", baby_id.toString());
                 startActivity(intent);
                 break;
 
             case "Diaper":
-                Log.d(TAG, "onSectionClicked: Goes into dia[er activity");
+                Log.d(TAG, "onSectionClicked: Goes into diaper activity");
                 intent = new Intent(this, BabyDiaper.class);
-                intent.putExtra("wetDiapers",   Double.toString(0.0)); //todo get baby current weight for this.
-                intent.putExtra("dirtyDiapers", Double.toString(0.0)); //todo get baby current weight for this.
+                intent.putExtra("wetDiapers",   Double.toString(0.0));
+                intent.putExtra("dirtyDiapers", Double.toString(0.0));
+                intent.putExtra("baby_id", baby_id.toString());
                 startActivity(intent);
                 break;
+
+            case "Sleeping":
+                Log.d(TAG, "onSectionClicked: Goes into sleeping activity");
+                // todo init baby sleeping.
+                intent = new Intent(this, BabySleepingTime.class);
+                intent.putExtra("baby_id", baby_id.toString());
+                startActivity(intent);
         }
     }
 
     public void loadData() {
-        SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
+        SharedPreferences sharedPreferences = getSharedPreferences(Globals.SHARED_PREFS, MODE_PRIVATE);
         this.token = sharedPreferences.getString(Globals.TOKEN,"");
     }
 }

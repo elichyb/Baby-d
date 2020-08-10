@@ -4,12 +4,14 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.elichy.baby_d.Globals;
 import com.elichy.baby_d.R;
 import com.elichy.baby_d.ViewAdds.SetWeightDialog;
 
@@ -50,11 +52,21 @@ public class BabyWeight extends AppCompatActivity {
         Intent intent = getIntent();
         this.weight = intent.getStringExtra("weight");
         babyWeightText.setText(weight);
+        loadData();
+        setBaby_id();
     }
 
     private void setInit() {
         openDialogBtn = (Button) findViewById(R.id.changeWeightDialog);
         babyWeightText = (TextView) findViewById(R.id.babyWeightText);
+    }
 
+    public void loadData() {
+        SharedPreferences sharedPreferences = getSharedPreferences(Globals.SHARED_PREFS, MODE_PRIVATE);
+        this.token = sharedPreferences.getString(Globals.TOKEN,"");
+    }
+
+    public void setBaby_id(){
+        baby_id =  UUID.fromString(getIntent().getStringExtra("baby_id"));
     }
 }

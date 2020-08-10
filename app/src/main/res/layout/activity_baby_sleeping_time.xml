@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Activities.BabySleepingTime"
+    android:background="@color/colorAccent">
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/sleeping_time">
+        <ListView
+            android:id="@+id/babySleepingTimeList"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+        />
+    </RelativeLayout>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/sleeping_time"
+        android:layout_alignParentBottom="true">
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/addSleepingTime"
+            android:layout_margin="15dp"
+            android:textSize="18sp"
+            android:padding="15dp"/>
+    </RelativeLayout>
+</RelativeLayout>
