@@ -32,6 +32,8 @@
     <string name="wet">Wet</string>
     <string name="dirty">Dirty</string>
     <string name="addSleepingTime">Add sleeping time</string>
+    <string name="addSleep">How much time the baby sleep?</string>
+    <string name="addSleepBtn">Add Sleep</string>
 
     <string-array name="Feed_Array">
         <item>Breast Feeding</item>

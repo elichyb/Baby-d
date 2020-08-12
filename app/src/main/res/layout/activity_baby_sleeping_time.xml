@@ -23,6 +23,7 @@
         android:layout_below="@id/sleeping_time"
         android:layout_alignParentBottom="true">
         <Button
+            android:id="@+id/sleepingTimeBtn"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/addSleepingTime"

@@ -7,13 +7,18 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.util.Log;
 
 import com.elichy.baby_d.Globals;
 import com.elichy.baby_d.Models.ResAPIHandler;
+import com.elichy.baby_d.Models.Sleep;
 import com.elichy.baby_d.R;
 import com.elichy.baby_d.ViewAdds.BabySectionRecyclerViewAdapter;
 
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 import retrofit2.Retrofit;
@@ -78,10 +83,23 @@ public class BabyViewActivity extends AppCompatActivity implements BabySectionRe
 
             case "Sleeping":
                 Log.d(TAG, "onSectionClicked: Goes into sleeping activity");
-                // todo init baby sleeping.
+                ArrayList<Sleep> sleeps = new ArrayList<Sleep>();
+                sleeps.add(new Sleep(baby_id, "2020-01-04", "14:00:00", 20));
+                sleeps.add(new Sleep(baby_id, "2020-01-04", "17:00:00", 40));
+                sleeps.add(new Sleep(baby_id, "2020-01-04", "20:00:00", 30));
+
                 intent = new Intent(this, BabySleepingTime.class);
+                intent.putExtra("sleeps", sleeps);
                 intent.putExtra("baby_id", baby_id.toString());
                 startActivity(intent);
+                break;
+
+            case "Eating":
+                Log.d(TAG, "onSectionClicked: Goes into Eating activity");
+                intent = new Intent(this, BabyEat.class);
+                intent.putExtra("baby_id", baby_id.toString());
+                startActivity(intent);
+                break;
         }
     }
 

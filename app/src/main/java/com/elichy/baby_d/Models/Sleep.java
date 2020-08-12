@@ -1,14 +1,20 @@
 package com.elichy.baby_d.Models;
 
+import org.parceler.Parcel;
+
+import java.io.Serializable;
 import java.util.UUID;
 
 
 // This module will represent the data we will send to the server :)
-public class Sleep {
-    private UUID baby_id;
-    private String date;
-    private String time;
-    private int sleeping_time;
+
+public class Sleep implements Serializable {
+    UUID baby_id;
+    String date;
+    String time;
+    int sleeping_time;
+
+    public Sleep(){}
 
     public Sleep(UUID baby_id, String date, String time, int sleeping_time) {
         this.baby_id = baby_id;
