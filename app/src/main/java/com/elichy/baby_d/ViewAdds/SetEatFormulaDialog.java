@@ -17,7 +17,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.RadioButton;
+import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -26,8 +27,9 @@ import androidx.fragment.app.DialogFragment;
 
 import com.elichy.baby_d.BuildConfig;
 import com.elichy.baby_d.Globals;
-import com.elichy.baby_d.Models.Diaper;
+import com.elichy.baby_d.Models.Formula;
 import com.elichy.baby_d.Models.ResAPIHandler;
+import com.elichy.baby_d.Models.Sleep;
 import com.elichy.baby_d.R;
 
 import java.time.LocalDateTime;
@@ -42,24 +44,25 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-public class SetDiaperDialog  extends DialogFragment {
-    private static final String TAG = "SetDiaperDialog";
-    private Retrofit retrofit;
-    private ResAPIHandler resAPIHandler;
+import static com.elichy.baby_d.Globals.FOMULA;
+
+public class SetEatFormulaDialog extends DialogFragment {
+    private static final String TAG = "SetEatFormulaDialog";
     private UUID baby_id;
     private String token;
-    private RadioButton wet;
-    private RadioButton dirty;
+    private Retrofit retrofit;
+    private ResAPIHandler resAPIHandler;
+    private EditText amountText;
     private Button submitBtn;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
-        View view = inflater.inflate(R.layout.set_diaper_dialog, container, false);
+        View view = inflater.inflate(R.layout.set_eating_formula_dialog, container, false);
         setInit(view);
         setListener();
-        Log.d(TAG, "onCreateView: Start dialog");
+        Log.d(TAG, "onCreateView: Load the dialog fragment");
         return view;
     }
 
@@ -69,7 +72,8 @@ public class SetDiaperDialog  extends DialogFragment {
             public void onClick(View view) {
                 String date = get_date();
                 String time = get_time();
-                Diaper d = new Diaper(baby_id, date, time, wet.isChecked(), dirty.isChecked());
+                int amount = Integer.parseInt(amountText.getText().toString().trim());
+                Formula f = new Formula(baby_id, date, time, amount, Globals.FOMULA);
 
                 // create okhttp client
                 OkHttpClient.Builder okHttpClient = new OkHttpClient.Builder();
@@ -85,23 +89,23 @@ public class SetDiaperDialog  extends DialogFragment {
 
                 retrofit = builder.build();
                 resAPIHandler = retrofit.create(ResAPIHandler.class);
-                Call<String> call = resAPIHandler.setBabyDiaper(token, d);
+                Call<String> call = resAPIHandler.setBabyEatFormula(token, f);
                 call.enqueue(new Callback<String>() {
                     @Override
                     public void onResponse(Call<String> call, Response<String> response) {
                         if (! response.isSuccessful()){
-                            Toast.makeText(getContext(), "Failed to set baby diaper", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getContext(), "Failed to set baby eat formula", Toast.LENGTH_SHORT).show();
                         }
                         else
                         {
-                            Toast.makeText(getContext(), "Baby diaper set successfully", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getContext(), "Baby eat formula set successfully", Toast.LENGTH_SHORT).show();
                         }
                     }
 
                     @Override
                     public void onFailure(Call<String> call, Throwable t) {
                         Log.d(TAG, "onFailure: "+t.getMessage());
-                        Toast.makeText(getContext(), "Failed to set baby diaper", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getContext(), "Failed to set baby eat formula", Toast.LENGTH_SHORT).show();
                     }
                 });
             }
@@ -115,14 +119,12 @@ public class SetDiaperDialog  extends DialogFragment {
                 DateTimeFormatter dtf = DateTimeFormatter.ofPattern(Globals.TIME_FORMAT);
                 return LocalDateTime.now().toString();
             }
-
         });
     }
 
     private void setInit(View view) {
+        amountText = (EditText) view.findViewById(R.id.amountText);
         submitBtn = (Button) view.findViewById(R.id.submitBtn);
-        wet = (RadioButton) view.findViewById(R.id.wetBtn);
-        dirty = (RadioButton) view.findViewById(R.id.dirtyBtn);
     }
 
     public void setToken(String token) {
@@ -135,3 +137,4 @@ public class SetDiaperDialog  extends DialogFragment {
         Log.d(TAG, "setBaby_id: baby id set: " + this.baby_id);
     }
 }
+

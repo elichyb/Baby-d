@@ -1,13 +1,21 @@
-package com.elichy.baby_d.Models;
+/*
+ * //----------------------------------------------------------------------------
+ * // (C) Copyright Elichy Barak 2020
+ * //
+ * // The source code for this program is not published or other-
+ * // wise divested of its trade secrets, irrespective of what has
+ * // been deposited with the U.S. Copyright Office.
+ * //
+ * //----------------------------------------------------------------------------
+ */
 
+package com.elichy.baby_d.Models;
 import java.util.List;
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
 import retrofit2.http.POST;
-import retrofit2.http.PUT;
-
 
 public interface ResAPIHandler {
 
@@ -28,4 +36,13 @@ public interface ResAPIHandler {
 
     @POST("set_diaper")
     Call<String> setBabyDiaper(@Header("Authorization") String token, @Body Diaper diaper);
+
+    @POST("set_sleep")
+    Call<String> setBabySleep(@Header("Authorization") String token, @Body Sleep sleep);
+
+    @POST("set_formula")
+    Call<String> setBabyEatFormula(@Header("Authorization") String token, @Body Formula formula);
+
+    @POST("set_breast")
+    Call<String> setBabyEatBreast(@Header("Authorization") String token, @Body BreastFeed breastFeed);
 }

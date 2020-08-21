@@ -34,6 +34,13 @@
     <string name="addSleepingTime">Add sleeping time</string>
     <string name="addSleep">How much time the baby sleep?</string>
     <string name="addSleepBtn">Add Sleep</string>
+    <string name="addEatFormulaRecord">Add baby eat formula record</string>
+    <string name="addEatBreastRecord">Add baby eat formula record</string>
+    <string name="Formula">Formula</string>
+    <string name="breast">breast feed</string>
+    <string name="amount">How much formula?</string>
+    <string name="breast_side">Breast side</string>
+    <string name="pumpTime">Feeding time</string>
 
     <string-array name="Feed_Array">
         <item>Breast Feeding</item>

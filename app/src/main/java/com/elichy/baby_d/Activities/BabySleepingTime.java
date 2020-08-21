@@ -1,12 +1,9 @@
 package com.elichy.baby_d.Activities;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.os.Parcel;
-import android.os.Parcelable;
 import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -14,13 +11,10 @@ import android.widget.Button;
 import android.widget.ListView;
 
 import com.elichy.baby_d.Globals;
-import com.elichy.baby_d.Models.Baby;
 import com.elichy.baby_d.Models.Sleep;
 import com.elichy.baby_d.R;
 import com.elichy.baby_d.ViewAdds.SetSleepingDialog;
-import com.elichy.baby_d.ViewAdds.SetWeightDialog;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.UUID;
 
 public class BabySleepingTime extends AppCompatActivity {
@@ -50,7 +44,6 @@ public class BabySleepingTime extends AppCompatActivity {
                 setSleepingDialog.setToken(token);
                 setSleepingDialog.show(getSupportFragmentManager(),"setSleepingDialog");
             }
-
         });
     }
 

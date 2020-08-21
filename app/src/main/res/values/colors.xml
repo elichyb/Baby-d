@@ -2,9 +2,9 @@
 <resources>
     <color name="colorPrimary">#6200EE</color>
     <color name="colorPrimaryDark">#3700B3</color>
-    <color name="colorAccent">#03DAC5</color>
-    <color name="pastelGreen">#8BC34A</color>
-    <color name="pasteRed">#EA7373</color>
-    <color name="pasteYellow">#EDDF5A</color>
-    <color name="pasteBlue">#5AD7ED</color>
+    <color name="colorAccent">#4fc3f7</color>
+    <color name="pastelGreen">#81c784</color>
+    <color name="pasteRed">#e57373</color>
+    <color name="pasteYellow">#fff176</color>
+    <color name="pasteBlue">#b2ebf2</color>
 </resources>

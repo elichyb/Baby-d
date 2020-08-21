@@ -11,6 +11,8 @@ import android.os.Parcelable;
 import android.util.Log;
 
 import com.elichy.baby_d.Globals;
+import com.elichy.baby_d.Models.BreastFeed;
+import com.elichy.baby_d.Models.Formula;
 import com.elichy.baby_d.Models.ResAPIHandler;
 import com.elichy.baby_d.Models.Sleep;
 import com.elichy.baby_d.R;
@@ -83,10 +85,7 @@ public class BabyViewActivity extends AppCompatActivity implements BabySectionRe
 
             case "Sleeping":
                 Log.d(TAG, "onSectionClicked: Goes into sleeping activity");
-                ArrayList<Sleep> sleeps = new ArrayList<Sleep>();
-                sleeps.add(new Sleep(baby_id, "2020-01-04", "14:00:00", 20));
-                sleeps.add(new Sleep(baby_id, "2020-01-04", "17:00:00", 40));
-                sleeps.add(new Sleep(baby_id, "2020-01-04", "20:00:00", 30));
+                ArrayList<Sleep> sleeps = getSleep(); // todo we will pass here the baby full info list object and it will extract only the sleeping time from it
 
                 intent = new Intent(this, BabySleepingTime.class);
                 intent.putExtra("sleeps", sleeps);
@@ -96,11 +95,28 @@ public class BabyViewActivity extends AppCompatActivity implements BabySectionRe
 
             case "Eating":
                 Log.d(TAG, "onSectionClicked: Goes into Eating activity");
+                ArrayList<Formula> formulas = getFormula();
                 intent = new Intent(this, BabyEat.class);
                 intent.putExtra("baby_id", baby_id.toString());
                 startActivity(intent);
                 break;
         }
+    }
+
+    private ArrayList<Formula> getFormula() {
+        return new ArrayList<Formula>();
+    }
+
+    private ArrayList<BreastFeed> getBreast() {
+        return new ArrayList<BreastFeed>();
+    }
+
+    private ArrayList<Sleep> getSleep() {
+        ArrayList<Sleep> sleeps = new ArrayList<Sleep>();
+        sleeps.add(new Sleep(baby_id, "2020-01-04", "14:00:00", 20));
+        sleeps.add(new Sleep(baby_id, "2020-01-04", "17:00:00", 40));
+        sleeps.add(new Sleep(baby_id, "2020-01-04", "20:00:00", 30));
+        return sleeps;
     }
 
     public void loadData() {

@@ -11,32 +11,23 @@
 
 package com.elichy.baby_d.Models;
 
+import java.io.Serializable;
 import java.util.UUID;
 
-public class Weight {
+public class BreastFeed implements Serializable {
     UUID baby_id;
-    double weight;
     String date;
+    String time;
+    String breast_side;
+    int breast_feeding_time_length;
+    String feed_type;
 
-    public Weight(UUID baby_id, double weight, String date) {
+    public BreastFeed(UUID baby_id, String date, String time, String breast_side, int breast_feeding_time_length, String feed_type) {
         this.baby_id = baby_id;
-        this.weight = weight;
         this.date = date;
-    }
-
-    public UUID getBaby_id() {
-        return baby_id;
-    }
-
-    public void setBaby_id(UUID baby_id) {
-        this.baby_id = baby_id;
-    }
-
-    public double getWeight() {
-        return weight;
-    }
-
-    public void setWeight(double weight) {
-        this.weight = weight;
+        this.time = time;
+        this.breast_side = breast_side;
+        this.breast_feeding_time_length = breast_feeding_time_length;
+        this.feed_type = feed_type;
     }
 }
