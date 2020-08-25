@@ -39,6 +39,7 @@ public class RegisterActivity extends AppCompatActivity {
     EditText firstName;
     EditText lastName;
     EditText email;
+    EditText phone;
     EditText password;
     Button submit;
     private static final String TAG = "RegisterActivity";
@@ -59,6 +60,7 @@ public class RegisterActivity extends AppCompatActivity {
         firstName.addTextChangedListener(submiteTextWatcher);
         lastName.addTextChangedListener(submiteTextWatcher);
         email.addTextChangedListener(submiteTextWatcher);
+        phone.addTextChangedListener(submiteTextWatcher);
         password.addTextChangedListener(submiteTextWatcher);
     }
 
@@ -71,30 +73,30 @@ public class RegisterActivity extends AppCompatActivity {
                         firstName.getText().toString(),
                         lastName.getText().toString(),
                         email.getText().toString(),
+                        phone.getText().toString(),
                         password.getText().toString());
                 Call<String> call = resAPIHandler.registartParent(parentRegistration);
                 call.enqueue(new Callback<String>() {
                     @Override
                     public void onResponse(Call<String> call, Response<String> response) {
-                        Context context = getApplicationContext();
-                        int duration = Toast.LENGTH_SHORT;
-                        CharSequence text;
                         if (!response.isSuccessful()){
-                            text = "Failed registration";
+                            popToast("Failed registration");
                         }
                         else {
-                            text = "Successfully register";
+                            Log.d(TAG, "onResponse: successfully registered!!!");
+                            popToast("Successfully register");
+                            RegisterActivity.this.finish();
                         }
-                        Toast toast = Toast.makeText(context, text, duration);
-                        toast.show();
                     }
 
                     @Override
                     public void onFailure(Call<String> call, Throwable t) {
+                        popToast("Failed registration");
+                    }
+
+                    private void popToast(String msg){
                         Context context = getApplicationContext();
-                        CharSequence text = "Failed registration";
-                        int duration = Toast.LENGTH_SHORT;
-                        Toast toast = Toast.makeText(context, text, duration);
+                        Toast toast = Toast.makeText(context, msg, Toast.LENGTH_SHORT);
                         toast.show();
                     }
                 });
@@ -113,6 +115,7 @@ public class RegisterActivity extends AppCompatActivity {
             String userFirstName = firstName.getText().toString().trim();
             String userLastName = lastName.getText().toString().trim();
             String userEmail = email.getText().toString().trim();
+            String userPhone = phone.getText().toString().trim();
             String userPassword = password.getText().toString().trim();
             Log.d(TAG, String.format("onTextChanged: first_namd: %s " +
                     "last name: %s " +
@@ -127,6 +130,7 @@ public class RegisterActivity extends AppCompatActivity {
                     ! userLastName.isEmpty()   &&
                     ! userEmail.isEmpty()      &&
                     ! userPassword.isEmpty()   &&
+                    ! userPhone.isEmpty()      &&
                     pattern.matcher(userEmail).matches()
             );
         }
@@ -142,6 +146,7 @@ public class RegisterActivity extends AppCompatActivity {
         firstName = (EditText) findViewById(R.id.first_name_text);
         lastName = (EditText) findViewById(R.id.last_name_text);
         email = (EditText) findViewById(R.id.email_text);
+        phone = (EditText) findViewById(R.id.phone_text);
         password = (EditText) findViewById(R.id.password_text);
         submit = (Button) findViewById(R.id.submitBtn);
 

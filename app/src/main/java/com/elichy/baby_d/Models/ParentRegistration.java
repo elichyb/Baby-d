@@ -17,13 +17,15 @@ public class ParentRegistration {
     private String first_name;
     private String last_name;
     private String email;
+    private String phone;
     private String password;
     private static final String TAG = "ParentRegistration";
 
-    public ParentRegistration(String first_name, String last_name, String email, String password) {
+    public ParentRegistration(String first_name, String last_name, String email, String phone, String password) {
         this.first_name = first_name;
         this.last_name = last_name;
         this.email = email;
+        this.phone = phone;
         this.password = password;
         Log.d(TAG, "ParentRegistration: Create ParentRegistration object");
     }
@@ -58,5 +60,13 @@ public class ParentRegistration {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
     }
 }

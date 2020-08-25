@@ -41,6 +41,7 @@
     <string name="amount">How much formula?</string>
     <string name="breast_side">Breast side</string>
     <string name="pumpTime">Feeding time</string>
+    <string name="Phone">Phone</string>
 
     <string-array name="Feed_Array">
         <item>Breast Feeding</item>
