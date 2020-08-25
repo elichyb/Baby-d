@@ -28,6 +28,9 @@ public interface ResAPIHandler {
     @GET("get_my_babies")
     Call<List<Baby>> getMyBabies(@Header("Authorization") String token);
 
+    @GET("get_baby_full_info_for_today")
+    Call<List<BabyFullInfo>> getBabyFullInfo(@Header("Authorization") String token, String date);
+
     @POST("add_baby")
     Call<String> addNewBaby(@Header("Authorization") String token, @Body Baby baby);
 

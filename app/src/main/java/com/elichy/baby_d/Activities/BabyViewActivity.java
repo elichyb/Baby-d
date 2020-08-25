@@ -9,8 +9,11 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.util.Log;
+import android.widget.Toast;
 
+import com.elichy.baby_d.BuildConfig;
 import com.elichy.baby_d.Globals;
+import com.elichy.baby_d.Models.BabyFullInfo;
 import com.elichy.baby_d.Models.BreastFeed;
 import com.elichy.baby_d.Models.Formula;
 import com.elichy.baby_d.Models.ResAPIHandler;
@@ -19,11 +22,19 @@ import com.elichy.baby_d.R;
 import com.elichy.baby_d.ViewAdds.BabySectionRecyclerViewAdapter;
 
 import java.io.Serializable;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
+import okhttp3.OkHttpClient;
+import okhttp3.logging.HttpLoggingInterceptor;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 public class BabyViewActivity extends AppCompatActivity implements BabySectionRecyclerViewAdapter.OnSectionListner
 {
@@ -35,7 +46,7 @@ public class BabyViewActivity extends AppCompatActivity implements BabySectionRe
     private RecyclerView.LayoutManager mLayoutManager;
     private Retrofit retrofit;
     private String token;
-
+    private List<BabyFullInfo> babyFullInfos;
     private ResAPIHandler resAPIHandler;
     private UUID baby_id;
 
@@ -57,8 +68,53 @@ public class BabyViewActivity extends AppCompatActivity implements BabySectionRe
         mLayoutManager = new LinearLayoutManager(this);
         mAdapter = new BabySectionRecyclerViewAdapter(babySections, colors, this);
         babySectionList.setLayoutManager(mLayoutManager);
-         babySectionList.setAdapter(mAdapter);
+        babySectionList.setAdapter(mAdapter);
         loadData();
+        fetchDataFromServer();
+    }
+
+    private void fetchDataFromServer() {
+        String date = Globals.GET_DATE();
+
+        // create okhttp client
+        OkHttpClient.Builder okHttpClient = new OkHttpClient.Builder();
+        HttpLoggingInterceptor loggin = new HttpLoggingInterceptor();
+        if (BuildConfig.DEBUG) {
+            loggin.setLevel(HttpLoggingInterceptor.Level.BODY);
+        }
+        okHttpClient.addInterceptor(loggin);
+        Retrofit.Builder builder = new Retrofit.Builder()
+                .baseUrl(String.format("%s/api/baby/", Globals.SERVER_IP))
+                .client(okHttpClient.build())
+                .addConverterFactory(GsonConverterFactory.create());
+
+        retrofit = builder.build();
+        resAPIHandler = retrofit.create(ResAPIHandler.class);
+        Call<List<BabyFullInfo>> call = resAPIHandler.getBabyFullInfo(token, date);
+        call.enqueue(new Callback<List<BabyFullInfo>>() {
+            @Override
+            public void onResponse(Call<List<BabyFullInfo>> call, Response<List<BabyFullInfo>> response) {
+                if (! response.isSuccessful()){
+                    Toast.makeText(BabyViewActivity.this, "Failed to set baby eat formula", Toast.LENGTH_SHORT).show();
+                }
+                else
+                {
+                    Toast.makeText(BabyViewActivity.this, "Baby eat formula set successfully", Toast.LENGTH_SHORT).show();
+                }
+                babyFullInfos = response.body();
+            }
+
+            @Override
+            public void onFailure(Call<List<BabyFullInfo>> call, Throwable t) {
+                Log.d(TAG, "onFailure: "+t.getMessage());
+                Toast.makeText(BabyViewActivity.this, "Failed to set baby eat formula", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    private String get_date() {
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern(Globals.DATE_FORMAT);
+        return LocalDateTime.now().toString();
     }
 
     @Override

@@ -69,8 +69,8 @@ public class SetEatBreastDialog extends DialogFragment {
         submitBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String date = get_date();
-                String time = get_time();
+                String date = Globals.GET_DATE();
+                String time = Globals.GET_TIME();
                 String side = breastSideText.getText().toString().trim();
                 int feedTime = Integer.parseInt(feedingTime.getText().toString().trim());
                 BreastFeed b = new BreastFeed(baby_id, date, time, side, feedTime, Globals.BREASTFEED);
@@ -108,16 +108,6 @@ public class SetEatBreastDialog extends DialogFragment {
                         Toast.makeText(getContext(), "Failed to set baby eat breast", Toast.LENGTH_SHORT).show();
                     }
                 });
-            }
-
-            private String get_date() {
-                DateTimeFormatter dtf = DateTimeFormatter.ofPattern(Globals.DATE_FORMAT);
-                return LocalDateTime.now().toString();
-            }
-
-            private String get_time() {
-                DateTimeFormatter dtf = DateTimeFormatter.ofPattern(Globals.TIME_FORMAT);
-                return LocalDateTime.now().toString();
             }
         });
     }

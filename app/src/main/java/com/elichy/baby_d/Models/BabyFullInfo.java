@@ -12,36 +12,51 @@
 package com.elichy.baby_d.Models;
 
 public class BabyFullInfo {
-    private String dipper;                      // Can be wet or dry
-    private Integer feed_amount;                // Can be null if we are on breast feeding
-    private double weight;                      // Baby weight
-    private String feed_type;                   // Baby feed type for this current time
-    private String measure_time;                // Will hold the last time the baby eat
     private String measure_date;                // Will hold the date of today.
+    private String measure_time;                // Will hold the hour in today.
+    private double weight;                      // Baby weight
+    private boolean wet_dipper;                  // hold if baby had a wet diaper
+    private boolean dirty_dipper;                // hold if baby had a dirty diaper
+    private int feed_amount;                    // Can be null if we are on breast feeding
     private String breast_side;                 // Last breast side the baby eat from
     private Integer breast_feeding_time_length; // The time the baby breast feed in minutes
     private Integer sleeping_time;              // Time in minutes the baby slept.
+    private String feed_type;                   // Baby feed type for this current time
 
-    public BabyFullInfo(String dipper, Integer feed_amount, double weight, String feed_type,
-                        String measure_time, String measure_date, String breast_side,
-                        Integer breast_feeding_time_length, Integer sleeping_time) {
-        this.dipper = dipper;
-        this.feed_amount = feed_amount;
-        this.weight = weight;
-        this.feed_type = feed_type;
-        this.measure_time = measure_time;
+    public BabyFullInfo(String measure_date, String measure_time, double weight, boolean wet_dipper,
+                        boolean dirty_dipper, int feed_amount, String breast_side,
+                        Integer breast_feeding_time_length, Integer sleeping_time, String feed_type)
+    {
         this.measure_date = measure_date;
+        this.measure_time = measure_time;
+        this.weight = weight;
+        this.wet_dipper = wet_dipper;
+        this.dirty_dipper = dirty_dipper;
+        this.feed_amount = feed_amount;
         this.breast_side = breast_side;
         this.breast_feeding_time_length = breast_feeding_time_length;
         this.sleeping_time = sleeping_time;
+        this.feed_type = feed_type;
     }
 
-    public String getDipper() {
-        return dipper;
+    public boolean getWet_dipper() {
+        return wet_dipper;
     }
 
-    public void setDipper(String dipper) {
-        this.dipper = dipper;
+    public void setWet_dipper(boolean wet_dipper) {
+        this.wet_dipper = wet_dipper;
+    }
+
+    public boolean getDirty_dipper() {
+        return dirty_dipper;
+    }
+
+    public void setDirty_dipper(boolean dirty_dipper) {
+        this.dirty_dipper = dirty_dipper;
+    }
+
+    public void setFeed_amount(int feed_amount) {
+        this.feed_amount = feed_amount;
     }
 
     public Integer getFeed_amount() {

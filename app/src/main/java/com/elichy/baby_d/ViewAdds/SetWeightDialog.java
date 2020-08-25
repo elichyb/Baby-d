@@ -1,3 +1,14 @@
+/*
+ * //----------------------------------------------------------------------------
+ * // (C) Copyright Elichy Barak 2020
+ * //
+ * // The source code for this program is not published or other-
+ * // wise divested of its trade secrets, irrespective of what has
+ * // been deposited with the U.S. Copyright Office.
+ * //
+ * //----------------------------------------------------------------------------
+ */
+
 package com.elichy.baby_d.ViewAdds;
 
 import android.os.Bundle;
@@ -57,7 +68,7 @@ public class SetWeightDialog  extends DialogFragment {
         submitBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String today = get_date();
+                String today = Globals.GET_DATE();
                 // create okhttp client
                 OkHttpClient.Builder okHttpClient = new OkHttpClient.Builder();
                 HttpLoggingInterceptor loggin = new HttpLoggingInterceptor();
@@ -94,11 +105,6 @@ public class SetWeightDialog  extends DialogFragment {
                         Toast.makeText(getContext(), "Failed to set baby weight", Toast.LENGTH_SHORT).show();
                     }
                 });
-            }
-
-            private String get_date() {
-                DateTimeFormatter dtf = DateTimeFormatter.ofPattern(Globals.DATE_FORMAT);
-                return LocalDateTime.now().toString();
             }
         });
     }
