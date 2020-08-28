@@ -13,6 +13,8 @@ import android.widget.Toast;
 
 import com.elichy.baby_d.BuildConfig;
 import com.elichy.baby_d.Globals;
+import com.elichy.baby_d.Models.Baby;
+import com.elichy.baby_d.Models.BabyF;
 import com.elichy.baby_d.Models.BabyFullInfo;
 import com.elichy.baby_d.Models.BreastFeed;
 import com.elichy.baby_d.Models.Formula;
@@ -56,7 +58,6 @@ public class BabyViewActivity extends AppCompatActivity implements BabySectionRe
         setContentView(R.layout.activity_baby_view);
         Log.d(TAG, "onCreate: Start successfully");
         setInit();
-        
     }
 
     private void setInit() {
@@ -74,8 +75,6 @@ public class BabyViewActivity extends AppCompatActivity implements BabySectionRe
     }
 
     private void fetchDataFromServer() {
-        String date = Globals.GET_DATE();
-
         // create okhttp client
         OkHttpClient.Builder okHttpClient = new OkHttpClient.Builder();
         HttpLoggingInterceptor loggin = new HttpLoggingInterceptor();
@@ -90,12 +89,15 @@ public class BabyViewActivity extends AppCompatActivity implements BabySectionRe
 
         retrofit = builder.build();
         resAPIHandler = retrofit.create(ResAPIHandler.class);
-        Call<List<BabyFullInfo>> call = resAPIHandler.getBabyFullInfo(token, date);
+        BabyF b = new BabyF(baby_id, Globals.GET_DATE());
+        Call<List<BabyFullInfo>> call = resAPIHandler.getBabyFullInfo(token, b);
         call.enqueue(new Callback<List<BabyFullInfo>>() {
             @Override
             public void onResponse(Call<List<BabyFullInfo>> call, Response<List<BabyFullInfo>> response) {
                 if (! response.isSuccessful()){
                     Toast.makeText(BabyViewActivity.this, "Failed to set baby eat formula", Toast.LENGTH_SHORT).show();
+                    BabyViewActivity.this.finish();
+                    return;
                 }
                 else
                 {

@@ -130,6 +130,11 @@ public class AddBabyViewActivity extends AppCompatActivity {
 
                     @Override
                     public void onFailure(Call<String> call, Throwable t) {
+                        // Success only json is the problem
+                        if (t.toString().contains("Expected a string but was BEGIN_OBJECT")) {
+                            AddBabyViewActivity.this.finish();
+                            return;
+                        }
                         addBabyFailed.show();
                     }
                 });

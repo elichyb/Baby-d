@@ -26,6 +26,7 @@ import com.elichy.baby_d.Globals;
 import com.elichy.baby_d.Models.ParentRegistration;
 import com.elichy.baby_d.Models.ResAPIHandler;
 import com.elichy.baby_d.R;
+
 import java.util.regex.Pattern;
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
@@ -75,7 +76,7 @@ public class RegisterActivity extends AppCompatActivity {
                         email.getText().toString(),
                         phone.getText().toString(),
                         password.getText().toString());
-                Call<String> call = resAPIHandler.registartParent(parentRegistration);
+                Call<String> call = resAPIHandler.registertParent(parentRegistration);
                 call.enqueue(new Callback<String>() {
                     @Override
                     public void onResponse(Call<String> call, Response<String> response) {
@@ -91,6 +92,13 @@ public class RegisterActivity extends AppCompatActivity {
 
                     @Override
                     public void onFailure(Call<String> call, Throwable t) {
+                        Log.d(TAG, "onFailure: failed" + t.toString());
+                        // Until I will Create proper json.
+                        if (t.toString().contains("Expected a string but was BEGIN_OBJECT")){
+                            popToast("Successfully register");
+                            RegisterActivity.this.finish();
+                            return;
+                        }
                         popToast("Failed registration");
                     }
 
@@ -158,8 +166,6 @@ public class RegisterActivity extends AppCompatActivity {
         }
         okHttpClient.addInterceptor(loggin);
 
-        //todo set smaller timeout for it.
-        //Create retrofit instance
         retrofit = new Retrofit.Builder()
                 .baseUrl(String.format("%s/api/parent/", Globals.SERVER_IP))
                 .addConverterFactory(GsonConverterFactory.create())

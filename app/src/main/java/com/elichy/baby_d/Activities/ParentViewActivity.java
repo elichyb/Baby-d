@@ -54,6 +54,15 @@ public class ParentViewActivity extends AppCompatActivity {
         setListners();
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        setContentView(R.layout.activity_parent_view);
+        setInit();
+        setListners();
+    }
+
+
     private void setListners() {
         addBabyBtn.setOnClickListener(new View.OnClickListener() {
             @Override

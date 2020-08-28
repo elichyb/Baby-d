@@ -20,7 +20,7 @@ import retrofit2.http.POST;
 public interface ResAPIHandler {
 
     @POST("register")
-    Call<String> registartParent(@Body ParentRegistration parentRegistration);
+    Call<String> registertParent(@Body ParentRegistration parentRegistration);
 
     @POST("login")
     Call<Token> loginParent(@Body ParentLogin parentLogin);
@@ -28,8 +28,8 @@ public interface ResAPIHandler {
     @GET("get_my_babies")
     Call<List<Baby>> getMyBabies(@Header("Authorization") String token);
 
-    @GET("get_baby_full_info_for_today")
-    Call<List<BabyFullInfo>> getBabyFullInfo(@Header("Authorization") String token, String date);
+    @POST("get_baby_full_info_for_today")
+    Call<List<BabyFullInfo>> getBabyFullInfo(@Header("Authorization") String token, @Body BabyF babyF);
 
     @POST("add_baby")
     Call<String> addNewBaby(@Header("Authorization") String token, @Body Baby baby);
