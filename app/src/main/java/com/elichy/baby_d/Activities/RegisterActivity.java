@@ -92,13 +92,13 @@ public class RegisterActivity extends AppCompatActivity {
 
                     @Override
                     public void onFailure(Call<String> call, Throwable t) {
-                        Log.d(TAG, "onFailure: failed" + t.toString());
                         // Until I will Create proper json.
                         if (t.toString().contains("Expected a string but was BEGIN_OBJECT")){
                             popToast("Successfully register");
                             RegisterActivity.this.finish();
                             return;
                         }
+                        Log.d(TAG, "onFailure: failed" + t.toString());
                         popToast("Failed registration");
                     }
 

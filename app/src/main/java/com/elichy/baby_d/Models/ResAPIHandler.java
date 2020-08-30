@@ -35,10 +35,10 @@ public interface ResAPIHandler {
     Call<String> addNewBaby(@Header("Authorization") String token, @Body Baby baby);
 
     @POST("set_weight")
-    Call<String> setBabyWeight(@Header("Authorization") String token, @Body Weight weight);
+    Call<ServerResponse> setBabyWeight(@Header("Authorization") String token, @Body Weight weight);
 
     @POST("set_diaper")
-    Call<String> setBabyDiaper(@Header("Authorization") String token, @Body Diaper diaper);
+    Call<ServerResponse> setBabyDiaper(@Header("Authorization") String token, @Body Diaper diaper);
 
     @POST("set_sleep")
     Call<String> setBabySleep(@Header("Authorization") String token, @Body Sleep sleep);

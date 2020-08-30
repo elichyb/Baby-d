@@ -60,6 +60,14 @@ public class BabyViewActivity extends AppCompatActivity implements BabySectionRe
         setInit();
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        setContentView(R.layout.activity_baby_view);
+        Log.d(TAG, "onCreate: Start successfully");
+        setInit();
+    }
+
     private void setInit() {
         baby_id = UUID.fromString(getIntent().getStringExtra(Globals.BABY_ID));
         babySectionList = (RecyclerView) findViewById(R.id.babySectionList);

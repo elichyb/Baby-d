@@ -27,6 +27,7 @@ import androidx.fragment.app.DialogFragment;
 import com.elichy.baby_d.BuildConfig;
 import com.elichy.baby_d.Globals;
 import com.elichy.baby_d.Models.ResAPIHandler;
+import com.elichy.baby_d.Models.ServerResponse;
 import com.elichy.baby_d.Models.Weight;
 import com.elichy.baby_d.R;
 
@@ -86,21 +87,22 @@ public class SetWeightDialog  extends DialogFragment {
                 double w = Double.parseDouble(babyWeightText.getText().toString().trim());
                 Weight weight = new Weight(baby_id, w, today);
 
-                Call<String> call = resAPIHandler.setBabyWeight(token, weight);
-                call.enqueue(new Callback<String>() {
+                Call<ServerResponse> call = resAPIHandler.setBabyWeight(token, weight);
+                call.enqueue(new Callback<ServerResponse>() {
                     @Override
-                    public void onResponse(Call<String> call, Response<String> response) {
+                    public void onResponse(Call<ServerResponse> call, Response<ServerResponse> response) {
                         if (! response.isSuccessful()){
-                            Toast.makeText(getContext(), "Failed to set baby    weight", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getContext(), "Failed to set baby weight", Toast.LENGTH_SHORT).show();
                         }
                         else
-                            {
+                        {
                             Toast.makeText(getContext(), "Baby weight set successfully", Toast.LENGTH_SHORT).show();
+                            SetWeightDialog.this.dismiss();
                         }
                     }
 
                     @Override
-                    public void onFailure(Call<String> call, Throwable t) {
+                    public void onFailure(Call<ServerResponse> call, Throwable t) {
                         Log.d(TAG, "onFailure: "+t.getMessage());
                         Toast.makeText(getContext(), "Failed to set baby weight", Toast.LENGTH_SHORT).show();
                     }

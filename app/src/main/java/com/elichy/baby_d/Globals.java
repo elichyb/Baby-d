@@ -28,11 +28,11 @@ public class Globals {
 
     public static String GET_DATE() {
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern(Globals.DATE_FORMAT);
-        return LocalDateTime.now().toString();
+        return LocalDateTime.now().toLocalDate().toString();
     }
 
     public static String GET_TIME() {
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern(Globals.TIME_FORMAT);
-        return LocalDateTime.now().toString();
+        return LocalDateTime.now().toLocalTime().toString();
     }
 }
