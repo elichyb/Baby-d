@@ -7,13 +7,11 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.os.Parcelable;
 import android.util.Log;
 import android.widget.Toast;
 
 import com.elichy.baby_d.BuildConfig;
 import com.elichy.baby_d.Globals;
-import com.elichy.baby_d.Models.Baby;
 import com.elichy.baby_d.Models.BabyF;
 import com.elichy.baby_d.Models.BabyFullInfo;
 import com.elichy.baby_d.Models.BreastFeed;
@@ -23,7 +21,6 @@ import com.elichy.baby_d.Models.Sleep;
 import com.elichy.baby_d.R;
 import com.elichy.baby_d.ViewAdds.BabySectionRecyclerViewAdapter;
 
-import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -51,6 +48,7 @@ public class BabyViewActivity extends AppCompatActivity implements BabySectionRe
     private List<BabyFullInfo> babyFullInfos;
     private ResAPIHandler resAPIHandler;
     private UUID baby_id;
+    private boolean need_resume = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,9 +61,18 @@ public class BabyViewActivity extends AppCompatActivity implements BabySectionRe
     @Override
     public void onResume() {
         super.onResume();
-        setContentView(R.layout.activity_baby_view);
-        Log.d(TAG, "onCreate: Start successfully");
-        setInit();
+        if (need_resume) {
+            setContentView(R.layout.activity_baby_view);
+            Log.d(TAG, "onCreate: Start successfully");
+            setInit();
+        }
+        need_resume = true;
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        need_resume = false;
     }
 
     private void setInit() {
@@ -103,21 +110,20 @@ public class BabyViewActivity extends AppCompatActivity implements BabySectionRe
             @Override
             public void onResponse(Call<List<BabyFullInfo>> call, Response<List<BabyFullInfo>> response) {
                 if (! response.isSuccessful()){
-                    Toast.makeText(BabyViewActivity.this, "Failed to set baby eat formula", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(BabyViewActivity.this, "Failed to get baby full details", Toast.LENGTH_SHORT).show();
                     BabyViewActivity.this.finish();
-                    return;
                 }
                 else
                 {
-                    Toast.makeText(BabyViewActivity.this, "Baby eat formula set successfully", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(BabyViewActivity.this, "Baby load details successfully", Toast.LENGTH_SHORT).show();
+                    babyFullInfos = response.body();
                 }
-                babyFullInfos = response.body();
             }
 
             @Override
             public void onFailure(Call<List<BabyFullInfo>> call, Throwable t) {
                 Log.d(TAG, "onFailure: "+t.getMessage());
-                Toast.makeText(BabyViewActivity.this, "Failed to set baby eat formula", Toast.LENGTH_SHORT).show();
+                Toast.makeText(BabyViewActivity.this, "Failed to get baby full details", Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -132,10 +138,12 @@ public class BabyViewActivity extends AppCompatActivity implements BabySectionRe
         Intent intent;
         Log.d(TAG, "onSectionClicked: clicked on " + babySections[pos]);
         switch (babySections[pos]){
+
             case "Current Weight":
                 Log.d(TAG, "onSectionClicked: Goes into current weight");
                 intent = new Intent(this, BabyWeight.class);
-                intent.putExtra("weight", Double.toString(0.0));
+                double weight = get_weight();
+                intent.putExtra("weight", Double.toString(weight));
                 intent.putExtra("baby_id", baby_id.toString());
                 startActivity(intent);
                 break;
@@ -143,16 +151,15 @@ public class BabyViewActivity extends AppCompatActivity implements BabySectionRe
             case "Diaper":
                 Log.d(TAG, "onSectionClicked: Goes into diaper activity");
                 intent = new Intent(this, BabyDiaper.class);
-                intent.putExtra("wetDiapers",   Double.toString(0.0));
-                intent.putExtra("dirtyDiapers", Double.toString(0.0));
+                intent.putExtra("wetDiapers",   Integer.toString(get_wet_diapers()));
+                intent.putExtra("dirtyDiapers", Integer.toString(get_dirty_diapers()));
                 intent.putExtra("baby_id", baby_id.toString());
                 startActivity(intent);
                 break;
 
             case "Sleeping":
                 Log.d(TAG, "onSectionClicked: Goes into sleeping activity");
-                ArrayList<Sleep> sleeps = getSleep(); // todo we will pass here the baby full info list object and it will extract only the sleeping time from it
-
+                ArrayList<Sleep> sleeps = getSleep();
                 intent = new Intent(this, BabySleepingTime.class);
                 intent.putExtra("sleeps", sleeps);
                 intent.putExtra("baby_id", baby_id.toString());
@@ -162,26 +169,68 @@ public class BabyViewActivity extends AppCompatActivity implements BabySectionRe
             case "Eating":
                 Log.d(TAG, "onSectionClicked: Goes into Eating activity");
                 ArrayList<Formula> formulas = getFormula();
+                ArrayList<BreastFeed> breastFeeds = getBreast();
                 intent = new Intent(this, BabyEat.class);
+                intent.putExtra("formula", formulas);
+                intent.putExtra("breastFeed", breastFeeds);
                 intent.putExtra("baby_id", baby_id.toString());
                 startActivity(intent);
                 break;
         }
     }
 
+    private int get_dirty_diapers() {
+        int count = 0;
+        for(BabyFullInfo b: babyFullInfos){
+            if (b.getDirty_dipper()){
+                count++;
+            }
+        }
+        return count;
+    }
+
+    private int get_wet_diapers() {
+        int count = 0;
+        for(BabyFullInfo b: babyFullInfos){
+            if (b.getWet_dipper()){
+                count++;
+            }
+        }
+        return count;
+    }
+
+    private double get_weight() {
+        return babyFullInfos.get(babyFullInfos.size() - 1).getWeight();
+    }
+
     private ArrayList<Formula> getFormula() {
-        return new ArrayList<Formula>();
+        ArrayList<Formula> formulas = new ArrayList<Formula>();
+        for(BabyFullInfo b: babyFullInfos) {
+            if (b.getFeed_amount() != null){
+                formulas.add(new Formula(baby_id, b.getMeasure_date(), b.getMeasure_time(), b.getFeed_amount(), b.getFeed_type()));
+            }
+        }
+        return formulas;
     }
 
     private ArrayList<BreastFeed> getBreast() {
-        return new ArrayList<BreastFeed>();
+        ArrayList<BreastFeed> breastFeeds =  new ArrayList<BreastFeed>();
+        for(BabyFullInfo b: babyFullInfos) {
+            if (b.getBreast_side() != null){
+                breastFeeds.add(new BreastFeed(baby_id, b.getMeasure_date(), b.getMeasure_time(), b.getBreast_side(),
+                        b.getBreast_feeding_time_length(), b.getFeed_type()));
+            }
+        }
+        return breastFeeds;
     }
 
     private ArrayList<Sleep> getSleep() {
         ArrayList<Sleep> sleeps = new ArrayList<Sleep>();
-        sleeps.add(new Sleep(baby_id, "2020-01-04", "14:00:00", 20));
-        sleeps.add(new Sleep(baby_id, "2020-01-04", "17:00:00", 40));
-        sleeps.add(new Sleep(baby_id, "2020-01-04", "20:00:00", 30));
+        for(BabyFullInfo b: babyFullInfos) {
+            if(b.getSleeping_time() != 0){
+                sleeps.add(new Sleep(baby_id, b.getMeasure_date(), b.getMeasure_time(), b.getSleeping_time()));
+            }
+        }
         return sleeps;
     }
 

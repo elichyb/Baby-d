@@ -29,6 +29,7 @@ import com.elichy.baby_d.BuildConfig;
 import com.elichy.baby_d.Globals;
 import com.elichy.baby_d.Models.Formula;
 import com.elichy.baby_d.Models.ResAPIHandler;
+import com.elichy.baby_d.Models.ServerResponse;
 import com.elichy.baby_d.Models.Sleep;
 import com.elichy.baby_d.R;
 
@@ -89,21 +90,22 @@ public class SetEatFormulaDialog extends DialogFragment {
 
                 retrofit = builder.build();
                 resAPIHandler = retrofit.create(ResAPIHandler.class);
-                Call<String> call = resAPIHandler.setBabyEatFormula(token, f);
-                call.enqueue(new Callback<String>() {
+                Call<ServerResponse> call = resAPIHandler.setBabyEatFormula(token, f);
+                call.enqueue(new Callback<ServerResponse>() {
                     @Override
-                    public void onResponse(Call<String> call, Response<String> response) {
+                    public void onResponse(Call<ServerResponse> call, Response<ServerResponse> response) {
                         if (! response.isSuccessful()){
                             Toast.makeText(getContext(), "Failed to set baby eat formula", Toast.LENGTH_SHORT).show();
                         }
                         else
                         {
                             Toast.makeText(getContext(), "Baby eat formula set successfully", Toast.LENGTH_SHORT).show();
+                            SetEatFormulaDialog.this.dismiss();
                         }
                     }
 
                     @Override
-                    public void onFailure(Call<String> call, Throwable t) {
+                    public void onFailure(Call<ServerResponse> call, Throwable t) {
                         Log.d(TAG, "onFailure: "+t.getMessage());
                         Toast.makeText(getContext(), "Failed to set baby eat formula", Toast.LENGTH_SHORT).show();
                     }

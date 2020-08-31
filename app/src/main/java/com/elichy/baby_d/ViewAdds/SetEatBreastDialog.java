@@ -29,6 +29,7 @@ import com.elichy.baby_d.Globals;
 import com.elichy.baby_d.Models.BreastFeed;
 import com.elichy.baby_d.Models.Formula;
 import com.elichy.baby_d.Models.ResAPIHandler;
+import com.elichy.baby_d.Models.ServerResponse;
 import com.elichy.baby_d.R;
 
 import java.time.LocalDateTime;
@@ -89,21 +90,22 @@ public class SetEatBreastDialog extends DialogFragment {
 
                 retrofit = builder.build();
                 resAPIHandler = retrofit.create(ResAPIHandler.class);
-                Call<String> call = resAPIHandler.setBabyEatBreast(token, b);
-                call.enqueue(new Callback<String>() {
+                Call<ServerResponse> call = resAPIHandler.setBabyEatBreast(token, b);
+                call.enqueue(new Callback<ServerResponse>() {
                     @Override
-                    public void onResponse(Call<String> call, Response<String> response) {
+                    public void onResponse(Call<ServerResponse> call, Response<ServerResponse> response) {
                         if (! response.isSuccessful()){
                             Toast.makeText(getContext(), "Failed to set baby eat breast", Toast.LENGTH_SHORT).show();
                         }
                         else
                         {
                             Toast.makeText(getContext(), "Baby eat breast set successfully", Toast.LENGTH_SHORT).show();
+                            SetEatBreastDialog.this.dismiss();
                         }
                     }
 
                     @Override
-                    public void onFailure(Call<String> call, Throwable t) {
+                    public void onFailure(Call<ServerResponse> call, Throwable t) {
                         Log.d(TAG, "onFailure: "+t.getMessage());
                         Toast.makeText(getContext(), "Failed to set baby eat breast", Toast.LENGTH_SHORT).show();
                     }

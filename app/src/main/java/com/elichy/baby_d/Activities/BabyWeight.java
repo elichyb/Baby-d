@@ -69,7 +69,7 @@ public class BabyWeight extends AppCompatActivity {
 
     private void setInit() {
         openDialogBtn = (Button) findViewById(R.id.changeWeightDialog);
-        babyWeightText = (TextView) findViewById(R.id.babyWeightText);
+        babyWeightText = (TextView) findViewById(R.id.weight);
     }
 
     public void loadData() {

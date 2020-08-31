@@ -41,11 +41,11 @@ public interface ResAPIHandler {
     Call<ServerResponse> setBabyDiaper(@Header("Authorization") String token, @Body Diaper diaper);
 
     @POST("set_sleep")
-    Call<String> setBabySleep(@Header("Authorization") String token, @Body Sleep sleep);
+    Call<ServerResponse> setBabySleep(@Header("Authorization") String token, @Body Sleep sleep);
 
     @POST("set_formula")
-    Call<String> setBabyEatFormula(@Header("Authorization") String token, @Body Formula formula);
+    Call<ServerResponse> setBabyEatFormula(@Header("Authorization") String token, @Body Formula formula);
 
     @POST("set_breast")
-    Call<String> setBabyEatBreast(@Header("Authorization") String token, @Body BreastFeed breastFeed);
+    Call<ServerResponse> setBabyEatBreast(@Header("Authorization") String token, @Body BreastFeed breastFeed);
 }

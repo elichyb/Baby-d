@@ -73,15 +73,15 @@ public class BabyEat extends AppCompatActivity {
         getFormulas();
         getBreastFeed();
 
-//        //Show baby formulas feed data
-//        formulasListView = (ListView) findViewById(R.id.eatFormulaListView);
-//        ArrayAdapter<Formula> formulaArrayAdapter = new ArrayAdapter<>(BabyEat.this, android.R.layout.simple_list_item_1, formulas);
-//        formulasListView.setAdapter(formulaArrayAdapter);
-//
-//        // Show baby breast feed data
-//        BreastFeedListView = (ListView) findViewById(R.id.eatBreastListView);
-//        ArrayAdapter<BreastFeed> breastFeedArrayAdapter = new ArrayAdapter<>(BabyEat.this, android.R.layout.simple_list_item_1, breastFeeds);
-//        BreastFeedListView.setAdapter(breastFeedArrayAdapter);
+        //Show baby formulas feed data
+        formulasListView = (ListView) findViewById(R.id.eatFormulaListView);
+        ArrayAdapter<Formula> formulaArrayAdapter = new ArrayAdapter<>(BabyEat.this, android.R.layout.simple_list_item_1, formulas);
+        formulasListView.setAdapter(formulaArrayAdapter);
+
+        // Show baby breast feed data
+        BreastFeedListView = (ListView) findViewById(R.id.eatBreastListView);
+        ArrayAdapter<BreastFeed> breastFeedArrayAdapter = new ArrayAdapter<>(BabyEat.this, android.R.layout.simple_list_item_1, breastFeeds);
+        BreastFeedListView.setAdapter(breastFeedArrayAdapter);
 
         // Set other view elements
         loadData();

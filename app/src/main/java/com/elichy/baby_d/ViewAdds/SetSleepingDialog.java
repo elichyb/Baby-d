@@ -28,6 +28,7 @@ import com.elichy.baby_d.BuildConfig;
 import com.elichy.baby_d.Globals;
 import com.elichy.baby_d.Models.Diaper;
 import com.elichy.baby_d.Models.ResAPIHandler;
+import com.elichy.baby_d.Models.ServerResponse;
 import com.elichy.baby_d.Models.Sleep;
 import com.elichy.baby_d.R;
 import java.time.LocalDateTime;
@@ -67,7 +68,7 @@ public class SetSleepingDialog extends DialogFragment {
             public void onClick(View view) {
                 String date = Globals.GET_DATE();
                 String time = Globals.GET_TIME();
-                int sleeping_time =  Integer. parseInt(babySleepFillText.getText().toString().trim());
+                int sleeping_time =  Integer.parseInt(babySleepFillText.getText().toString().trim());
                 Sleep s = new Sleep(baby_id, date, time, sleeping_time);
 
                 // create okhttp client
@@ -84,21 +85,22 @@ public class SetSleepingDialog extends DialogFragment {
 
                 retrofit = builder.build();
                 resAPIHandler = retrofit.create(ResAPIHandler.class);
-                Call<String> call = resAPIHandler.setBabySleep(token, s);
-                call.enqueue(new Callback<String>() {
+                Call<ServerResponse> call = resAPIHandler.setBabySleep(token, s);
+                call.enqueue(new Callback<ServerResponse>() {
                     @Override
-                    public void onResponse(Call<String> call, Response<String> response) {
+                    public void onResponse(Call<ServerResponse> call, Response<ServerResponse> response) {
                         if (! response.isSuccessful()){
                             Toast.makeText(getContext(), "Failed to set baby sleep", Toast.LENGTH_SHORT).show();
                         }
                         else
                         {
                             Toast.makeText(getContext(), "Baby sleep set successfully", Toast.LENGTH_SHORT).show();
+                            SetSleepingDialog.this.dismiss();
                         }
                     }
 
                     @Override
-                    public void onFailure(Call<String> call, Throwable t) {
+                    public void onFailure(Call<ServerResponse> call, Throwable t) {
                         Log.d(TAG, "onFailure: "+t.getMessage());
                         Toast.makeText(getContext(), "Failed to set baby sleep", Toast.LENGTH_SHORT).show();
                     }

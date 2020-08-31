@@ -15,23 +15,23 @@ public class BabyFullInfo {
     private String measure_date;                // Will hold the date of today.
     private String measure_time;                // Will hold the hour in today.
     private double weight;                      // Baby weight
-    private boolean wet_dipper;                  // hold if baby had a wet diaper
-    private boolean dirty_dipper;                // hold if baby had a dirty diaper
+    private boolean wet_diaper;                 // hold if baby had a wet diaper
+    private boolean dirty_diaper;               // hold if baby had a dirty diaper
     private int feed_amount;                    // Can be null if we are on breast feeding
     private String breast_side;                 // Last breast side the baby eat from
     private Integer breast_feeding_time_length; // The time the baby breast feed in minutes
     private Integer sleeping_time;              // Time in minutes the baby slept.
     private String feed_type;                   // Baby feed type for this current time
 
-    public BabyFullInfo(String measure_date, String measure_time, double weight, boolean wet_dipper,
-                        boolean dirty_dipper, int feed_amount, String breast_side,
+    public BabyFullInfo(String measure_date, String measure_time, double weight, boolean wet_diaper,
+                        boolean dirty_diaper, int feed_amount, String breast_side,
                         Integer breast_feeding_time_length, Integer sleeping_time, String feed_type)
     {
         this.measure_date = measure_date;
         this.measure_time = measure_time;
         this.weight = weight;
-        this.wet_dipper = wet_dipper;
-        this.dirty_dipper = dirty_dipper;
+        this.wet_diaper = wet_diaper;
+        this.dirty_diaper = dirty_diaper;
         this.feed_amount = feed_amount;
         this.breast_side = breast_side;
         this.breast_feeding_time_length = breast_feeding_time_length;
@@ -40,19 +40,19 @@ public class BabyFullInfo {
     }
 
     public boolean getWet_dipper() {
-        return wet_dipper;
+        return wet_diaper;
     }
 
     public void setWet_dipper(boolean wet_dipper) {
-        this.wet_dipper = wet_dipper;
+        this.wet_diaper = wet_dipper;
     }
 
     public boolean getDirty_dipper() {
-        return dirty_dipper;
+        return dirty_diaper;
     }
 
     public void setDirty_dipper(boolean dirty_dipper) {
-        this.dirty_dipper = dirty_dipper;
+        this.dirty_diaper = dirty_dipper;
     }
 
     public void setFeed_amount(int feed_amount) {
