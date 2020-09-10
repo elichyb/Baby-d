@@ -117,6 +117,12 @@ public class BabyViewActivity extends AppCompatActivity implements BabySectionRe
                 {
                     Toast.makeText(BabyViewActivity.this, "Baby load details successfully", Toast.LENGTH_SHORT).show();
                     babyFullInfos = response.body();
+                    if (babyFullInfos.isEmpty()){
+                        List<BabyFullInfo> b = new ArrayList<>();
+                        b.add(new BabyFullInfo(Globals.GET_DATE(), Globals.GET_TIME(), 0.0, false, false, 0,
+                                null, 0, 0, null));
+                        babyFullInfos = b;
+                    }
                 }
             }
 
